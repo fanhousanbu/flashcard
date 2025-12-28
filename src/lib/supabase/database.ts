@@ -568,26 +568,64 @@ export async function getDeckStudyStats(userId: string, deckId: string) {
 
 /**
  * Get overall user study statistics
+ * Only counts active (non-deleted) cards and decks
  * @param userId User ID
  * @returns Overall user study statistics
  */
 export async function getUserStudyStats(userId: string) {
-  const { data, error } = await supabase
-    .from('study_records')
-    .select('*')
-    .eq('user_id', userId);
+  // First get the user's active deck IDs
+  const { data: decksData, error: decksError } = await supabase
+    .from('decks')
+    .select('id')
+    .eq('user_id', userId)
+    .is('deleted_at', null);
 
-  if (error) throw error;
-  
+  if (decksError) throw decksError;
+
+  const deckIds = decksData?.map(d => d.id) || [];
+
+  // If no decks, return zeros
+  if (deckIds.length === 0) {
+    return {
+      totalCards: 0,
+      studiedCards: 0,
+      totalReviews: 0,
+      correctReviews: 0,
+      successRate: 0,
+    };
+  }
+
+  // Count active cards in user's decks
+  const { data: cardsData, error: cardsError } = await supabase
+    .from('cards')
+    .select('id')
+    .in('deck_id', deckIds)
+    .is('deleted_at', null);
+
+  if (cardsError) throw cardsError;
+
+  const totalCards = cardsData?.length || 0;
+  const cardIds = cardsData?.map(c => c.id) || [];
+
+  // Get study records only for active cards
+  const { data: studyData, error: studyError } = await supabase
+    .from('study_records')
+    .select('total_reviews, correct_reviews')
+    .eq('user_id', userId)
+    .in('card_id', cardIds.length > 0 ? cardIds : ['00000000-0000-0000-0000-000000000000']);
+
+  if (studyError) throw studyError;
+
+  const studiedCards = studyData?.filter(r => r.total_reviews > 0).length || 0;
+  const totalReviews = studyData?.reduce((sum, r) => sum + (r.total_reviews || 0), 0) || 0;
+  const correctReviews = studyData?.reduce((sum, r) => sum + (r.correct_reviews || 0), 0) || 0;
+
   return {
-    totalCards: data.length,
-    studiedCards: data.filter(r => r.total_reviews > 0).length,
-    totalReviews: data.reduce((sum, r) => sum + (r.total_reviews || 0), 0),
-    correctReviews: data.reduce((sum, r) => sum + (r.correct_reviews || 0), 0),
-    successRate: data.reduce((sum, r) => sum + (r.total_reviews || 0), 0) > 0
-      ? (data.reduce((sum, r) => sum + (r.correct_reviews || 0), 0) / 
-         data.reduce((sum, r) => sum + (r.total_reviews || 0), 0)) * 100
-      : 0,
+    totalCards,
+    studiedCards,
+    totalReviews,
+    correctReviews,
+    successRate: totalReviews > 0 ? (correctReviews / totalReviews) * 100 : 0,
   };
 }
 
