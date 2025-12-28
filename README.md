@@ -1,166 +1,143 @@
-# FlashCard H5 项目
+# FlashCard
 
-智能学习卡片应用，基于 React + TypeScript + Supabase，支持间隔重复学习算法和卡组市场。
+A smart flashcard learning application built with React + TypeScript + Supabase, featuring spaced repetition algorithms and a card marketplace.
 
-## 功能特性
+## Features
 
-- 🧠 **科学记忆**: 基于 SM-2 算法的间隔重复系统
-- 📚 **卡组管理**: 创建、编辑、删除学习卡组
-- ✏️ **Markdown 支持**: 富文本卡片编辑
-- 🎯 **双模式学习**: 间隔重复 + 简单复习
-- 🏪 **卡组市场**: 发布和导入学习卡组
-- 🔒 **数据安全**: 软删除、数据恢复
-- 📱 **响应式设计**: 适配各种屏幕尺寸
-- 🌓 **主题切换**: 支持亮色/暗色模式
+- **Scientific Memory**: Spaced repetition system based on the SM-2 algorithm
+- **Deck Management**: Create, edit, and delete study decks
+- **Markdown Support**: Rich text card editing with Markdown
+- **Dual Study Modes**: Spaced repetition + Simple review
+- **Card Marketplace**: Publish and import study decks
+- **Data Security**: Soft delete with data recovery support
+- **Responsive Design**: Adapts to all screen sizes
+- **Theme Switching**: Light/Dark mode support
 
-## 技术栈
+## Tech Stack
 
-### 前端
-- React 18 + TypeScript
+### Frontend
+- React 19 + TypeScript
 - Vite
-- React Router v6
-- Zustand (状态管理)
+- React Router v7
+- Zustand (state management)
 - Tailwind CSS
-- Shadcn/ui
 - React Markdown
-- Sonner (Toast 通知)
+- Sonner (toast notifications)
 
-### 后端
+### Backend
 - Supabase (BaaS)
-  - PostgreSQL 数据库
+  - PostgreSQL database
   - Authentication
-  - Row Level Security
+  - Row Level Security (RLS)
   - Storage
 
-## 快速开始
+## Getting Started
 
-### 1. 克隆项目
+### 1. Clone and Install
 
 ```bash
 cd flashcard
 npm install
 ```
 
-### 2. 配置 Supabase
+### 2. Configure Supabase
 
-1. 访问 [Supabase](https://supabase.com) 创建新项目
-2. 复制项目 URL 和 anon key
-3. 创建 `.env` 文件：
+1. Visit [Supabase](https://supabase.com) to create a new project
+2. Copy your project URL and anon key
+3. Create a `.env` file:
 
 ```env
 VITE_SUPABASE_URL=your_supabase_url
 VITE_SUPABASE_KEY=your_supabase_anon_key
 ```
 
-### 3. 初始化数据库
+### 3. Initialize Database
 
-在 Supabase SQL Editor 中依次执行：
-```bash
-supabase/migrations/001_initial_schema.sql
-supabase/migrations/002_safe_migration.sql
-supabase/migrations/007_soft_delete_function.sql
-```
+Run the following SQL script in Supabase SQL Editor:
+- `docs/migrations/001_complete_schema.sql`
 
-### 4. 启动开发服务器
+### 4. Start Development Server
 
 ```bash
 npm run dev
 ```
 
-访问 http://localhost:5173
+Visit http://localhost:5173
 
-## 项目结构
+## Project Structure
 
 ```
 flashcard/
 ├── src/
-│   ├── components/         # 通用组件
-│   ├── features/           # 功能模块
-│   │   ├── auth/          # 认证
-│   │   ├── decks/         # 卡组管理
-│   │   ├── cards/         # 卡片管理
-│   │   ├── study/         # 学习功能
-│   │   └── marketplace/   # 市场功能
-│   ├── lib/               # 核心库
-│   │   ├── supabase/      # Supabase 配置
-│   │   ├── types/         # TypeScript 类型
-│   │   └── utils/         # 工具函数
-│   ├── hooks/             # 全局 hooks
-│   ├── routes/            # 路由配置
-│   └── pages/             # 页面组件
-└── supabase/              # Supabase 配置
-    └── migrations/        # 数据库迁移
+│   ├── components/         # Shared components
+│   ├── features/           # Feature modules
+│   │   ├── auth/          # Authentication
+│   │   ├── decks/         # Deck management
+│   │   ├── cards/         # Card management
+│   │   ├── study/         # Study functionality
+│   │   ├── profile/       # User profile
+│   │   ├── tags/          # Tag system
+│   │   ├── search/        # Global search
+│   │   └── marketplace/   # Marketplace
+│   ├── lib/               # Core libraries
+│   │   ├── supabase/      # Supabase client
+│   │   ├── types/         # TypeScript types
+│   │   └── utils/         # Utility functions
+│   ├── hooks/             # Global hooks
+│   ├── contexts/          # React contexts
+│   └── pages/             # Page components
+└── docs/migrations/        # Database migrations
 ```
 
-## 核心功能说明
+## Core Features
 
-### 间隔重复算法 (SM-2)
+### Spaced Repetition Algorithm (SM-2)
 
-项目实现了经典的 SM-2 算法，根据用户的记忆表现自动调整复习间隔：
+Implements the classic SM-2 algorithm that automatically adjusts review intervals based on memory performance:
+- Quality ratings 0-5
+- Automatic next review date calculation
+- Dynamic difficulty factor adjustment
 
-- 质量评分 0-5
-- 自动计算下次复习时间
-- 难度系数动态调整
+### User Profiles
 
-### 软删除
+- Personal information management
+- Study preferences configuration
+- Learning statistics tracking
+- Account security settings
 
-所有重要数据支持软删除：
-- 防止误删除
-- 支持数据恢复
-- 保留历史记录
+### Card Marketplace
 
-详见：[软删除实现说明](../docs/SOFT_DELETE_IMPLEMENTATION.md)
+- Publish personal decks
+- Browse community decks
+- One-click import for learning
+- Payment support (interface reserved)
 
-### 卡组市场
-
-- 发布个人卡组
-- 浏览社区卡组
-- 一键导入学习
-- 支持付费功能（预留接口）
-
-## 文档
-
-项目文档位于根目录的 `docs/` 文件夹：
-
-- [项目设置指南](../docs/SETUP.md)
-- [API 文档](../docs/API.md)
-- [故障排除](../docs/TROUBLESHOOTING.md)
-- [邮件验证设置](../docs/EMAIL_VERIFICATION.md)
-- [Resend 配置](../docs/RESEND_SETUP.md)
-- [卡片翻转功能](../docs/FLIPCARD_FEATURE.md)
-- [项目总结](../docs/PROJECT_SUMMARY.md)
-
-## 未来扩展
-
-- ✅ React Native 版本（共享业务逻辑）
-- ✅ PWA 离线支持
-- ✅ 学习小组功能
-- ✅ 付费系统集成
-- ✅ 数据统计分析
-
-## 开发命令
+## Development Commands
 
 ```bash
-# 安装依赖
+# Install dependencies
 npm install
 
-# 开发模式
+# Development mode
 npm run dev
 
-# 构建生产版本
+# Build for production
 npm run build
 
-# 预览生产版本
+# Preview production build
 npm run preview
 
-# 类型检查
+# Type checking
 npm run type-check
+
+# Run tests
+npm run test
 ```
 
-## 贡献指南
+## Contributing
 
-欢迎提交 Issue 和 Pull Request！
+Issues and Pull Requests are welcome!
 
-## 许可证
+## License
 
 MIT
