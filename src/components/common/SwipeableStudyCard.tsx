@@ -1,4 +1,5 @@
-import { useRef, useState, ReactNode, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlipCard } from './FlipCard';
 import './FlipCard.css';
@@ -41,7 +42,7 @@ export function SwipeableStudyCard({
   const isDraggingRef = useRef(false);
 
   // Trigger haptic feedback
-  const triggerHaptic = (pattern: VibrationPattern = 'light') => {
+  const triggerHaptic = (pattern: 'light' | 'medium' | 'heavy' | 'success' | 'error' = 'light') => {
     if ('vibrate' in navigator) {
       switch (pattern) {
         case 'light':

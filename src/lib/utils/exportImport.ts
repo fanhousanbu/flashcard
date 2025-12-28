@@ -24,7 +24,7 @@ export function exportDeck(deck: Deck, cards: Card[]): string {
   return JSON.stringify(exportData, null, 2);
 }
 
-export function exportDeckToCSV(deck: Deck, cards: Card[]): string {
+export function exportDeckToCSV(_deck: Deck, cards: Card[]): string {
   // CSV header
   const header = 'Front,Back,Position\n';
   

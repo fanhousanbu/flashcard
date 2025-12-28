@@ -36,29 +36,11 @@ function App() {
                 padding: '12px 16px',
                 fontSize: '14px',
               },
-              success: {
-                style: {
-                  background: 'hsl(142.1 76.2% 36.3%)',
-                  color: 'white',
-                },
-              },
-              error: {
-                style: {
-                  background: 'hsl(0 84.2% 60.2%)',
-                  color: 'white',
-                },
-              },
-              warning: {
-                style: {
-                  background: 'hsl(38 92% 50%)',
-                  color: 'white',
-                },
-              },
-              info: {
-                style: {
-                  background: 'hsl(217 91% 60%)',
-                  color: 'white',
-                },
+              classNames: {
+                success: 'bg-green-600 text-white',
+                error: 'bg-red-500 text-white',
+                warning: 'bg-yellow-500 text-white',
+                info: 'bg-blue-600 text-white',
               },
             }}
           />

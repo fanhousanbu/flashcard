@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTags } from '../../features/tags/hooks/useTags';
-import { TAG_COLORS } from '../../lib/types/tag';
+import { TAG_COLORS, type TagColor } from '../../lib/types/tag';
 import type { Tag } from '../../lib/types/tag';
 import { toast } from '../../hooks/useToast';
 
@@ -17,7 +17,7 @@ export function TagSelector({ selectedTags, onTagSelect, onTagRemove }: TagSelec
   const [isOpen, setIsOpen] = useState(false);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [newTagName, setNewTagName] = useState('');
-  const [newTagColor, setNewTagColor] = useState(TAG_COLORS[0].value);
+  const [newTagColor, setNewTagColor] = useState<TagColor>(TAG_COLORS[0].value);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown when clicking outside

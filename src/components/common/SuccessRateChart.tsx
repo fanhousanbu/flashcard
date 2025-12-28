@@ -134,7 +134,7 @@ export function SuccessRateChart({ data }: SuccessRateChartProps) {
                 borderRadius: '0.5rem',
               }}
               labelStyle={{ color: 'var(--tw-text-gray-900)' }}
-              formatter={(value: number) => [`${value}%`, t('stats.successRateCard')]}
+              formatter={(value: number | undefined) => [`${value ?? 0}%`, t('stats.successRateCard')]}
             />
             <Line
               type="monotone"

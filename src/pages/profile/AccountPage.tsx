@@ -10,7 +10,6 @@ export function AccountPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [saving, setSaving] = useState(false);
@@ -32,7 +31,6 @@ export function AccountPage() {
     try {
       await updatePassword(newPassword);
       toast.success(t('profile.account.passwordChanged'));
-      setCurrentPassword('');
       setNewPassword('');
       setConfirmPassword('');
     } catch (error) {

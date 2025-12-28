@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AppLayout } from '../components/layout/AppLayout';
@@ -123,7 +123,7 @@ export function StatsPage() {
               <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">{t('stats.overallProgress')}</h2>
               <ProgressBar
                 progress={overallProgress}
-                label={t('stats.cardsCount', { count: `${userStats.studiedCards} / ${userStats.totalCards}` })}
+                label={`${userStats.studiedCards} / ${userStats.totalCards} ${t('stats.cards')}`}
                 showPercentage
                 color="blue"
                 height="lg"

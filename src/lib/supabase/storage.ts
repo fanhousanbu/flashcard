@@ -8,7 +8,7 @@ export async function uploadAvatar(userId: string, file: File) {
   const fileName = `${userId}-${Date.now()}.${fileExt}`;
   const filePath = `${userId}/${fileName}`;
 
-  const { data, error } = await supabase.storage
+  const { error } = await supabase.storage
     .from(AVATARS_BUCKET)
     .upload(filePath, file, {
       upsert: true,
@@ -28,7 +28,7 @@ export async function uploadCardImage(deckId: string, file: File) {
   const fileName = `${deckId}-${Date.now()}.${fileExt}`;
   const filePath = `${deckId}/${fileName}`;
 
-  const { data, error } = await supabase.storage
+  const { error } = await supabase.storage
     .from(CARD_IMAGES_BUCKET)
     .upload(filePath, file);
 

@@ -30,3 +30,5 @@ export const TAG_COLORS = [
   { name: 'Orange', value: '#F97316' },
 ] as const;
 
+export type TagColor = typeof TAG_COLORS[number]['value'];
+

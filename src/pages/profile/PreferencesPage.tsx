@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AppLayout } from '../../components/layout/AppLayout';
 import { useProfile } from '../../features/profile/hooks/useProfile';
@@ -8,7 +8,6 @@ import type { StudyMode } from '../../lib/types/study';
 
 export function PreferencesPage() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const { preferences, updatePreferences } = useProfile();
   const [saving, setSaving] = useState(false);
 
@@ -63,9 +62,9 @@ export function PreferencesPage() {
           </h2>
           <div className="space-y-2">
             <button
-              onClick={() => handleModeChange('spaced')}
+              onClick={() => handleModeChange('spaced-repetition')}
               className={`w-full flex items-center gap-3 p-4 rounded-lg border-2 transition-all ${
-                preferences?.defaultStudyMode === 'spaced'
+                preferences?.defaultStudyMode === 'spaced-repetition'
                   ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
                   : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
               }`}
@@ -79,7 +78,7 @@ export function PreferencesPage() {
                   {t('profile.preferences.modeSpacedDesc')}
                 </div>
               </div>
-              {preferences?.defaultStudyMode === 'spaced' && (
+              {preferences?.defaultStudyMode === 'spaced-repetition' && (
                 <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
@@ -87,9 +86,9 @@ export function PreferencesPage() {
             </button>
 
             <button
-              onClick={() => handleModeChange('simple')}
+              onClick={() => handleModeChange('simple-review')}
               className={`w-full flex items-center gap-3 p-4 rounded-lg border-2 transition-all ${
-                preferences?.defaultStudyMode === 'simple'
+                preferences?.defaultStudyMode === 'simple-review'
                   ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
                   : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
               }`}
@@ -103,7 +102,7 @@ export function PreferencesPage() {
                   {t('profile.preferences.modeSimpleDesc')}
                 </div>
               </div>
-              {preferences?.defaultStudyMode === 'simple' && (
+              {preferences?.defaultStudyMode === 'simple-review' && (
                 <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>

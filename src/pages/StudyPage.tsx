@@ -20,13 +20,9 @@ export function StudyPage() {
     studyMode,
     isFlipped,
     isSessionComplete,
-    canGoBack,
-    canGoForward,
     startSession,
     flipCard,
     rateCard,
-    nextCard,
-    previousCard,
     reset,
   } = useStudySession();
 

@@ -6,13 +6,12 @@ import { ProfileStats } from '../features/profile/components/ProfileStats';
 import { ProfileMenu } from '../features/profile/components/ProfileMenu';
 import { useProfile } from '../features/profile/hooks/useProfile';
 import { useAuth } from '../features/auth/hooks/useAuth';
-import { signOut } from '../lib/supabase/auth';
 
 export function ProfilePage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { signOut: authSignOut } = useAuth();
-  const { profile } = useProfile();
+  const { profile: _profile } = useProfile();
 
   const handleLogout = async () => {
     await authSignOut();

@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useDeckStore } from '../store/deckStore';
 import { useAuthStore } from '../../auth/store/authStore';
 import * as db from '../../../lib/supabase/database';

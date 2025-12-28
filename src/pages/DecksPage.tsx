@@ -14,6 +14,7 @@ import { toast } from '../hooks/useToast';
 import ReactMarkdown from 'react-markdown';
 import * as db from '../lib/supabase/database';
 import type { Tag } from '../lib/types/tag';
+import React from 'react';
 
 const CARDS_PER_PAGE = 12;
 

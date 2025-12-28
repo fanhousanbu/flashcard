@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AppLayout } from '../components/layout/AppLayout';
 import { useTags } from '../features/tags/hooks/useTags';
-import { TAG_COLORS } from '../lib/types/tag';
+import { TAG_COLORS, type TagColor } from '../lib/types/tag';
 import type { Tag } from '../lib/types/tag';
 import { toast } from '../hooks/useToast';
 import { Loading } from '../components/common/Loading';
@@ -14,7 +14,7 @@ export function TagsPage() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [editingTag, setEditingTag] = useState<Tag | null>(null);
   const [tagName, setTagName] = useState('');
-  const [tagColor, setTagColor] = useState(TAG_COLORS[0].value);
+  const [tagColor, setTagColor] = useState<TagColor>(TAG_COLORS[0].value);
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,7 +68,7 @@ export function TagsPage() {
   const openEditModal = (tag: Tag) => {
     setEditingTag(tag);
     setTagName(tag.name);
-    setTagColor(tag.color);
+    setTagColor(tag.color as TagColor);
     setShowEditModal(true);
   };
 

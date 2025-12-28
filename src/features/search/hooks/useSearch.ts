@@ -74,7 +74,7 @@ export function useSearch() {
         ]);
 
         // Convert to SearchResult format
-        const deckResults: DeckSearchResult[] = decks.map(deck => ({
+        const deckResults: DeckSearchResult[] = decks.map((deck: { id: string; name: string; description: string | null; cardCount: number }) => ({
           type: 'deck' as const,
           id: deck.id,
           name: deck.name,
@@ -83,13 +83,13 @@ export function useSearch() {
           match: deck.name, // The matching text snippet
         }));
 
-        const cardResults: CardSearchResult[] = cards.map(card => {
+        const cardResults: CardSearchResult[] = cards.map((card: { id: string; deck_id: string; deck_name: string; front_content: string; back_content: string }) => {
           const matchInFront = card.front_content.toLowerCase().includes(debouncedQuery.toLowerCase());
           return {
             type: 'card' as const,
             id: card.id,
-            deckId: card.decks.id,
-            deckName: card.decks.name,
+            deckId: card.deck_id,
+            deckName: card.deck_name,
             frontContent: card.front_content,
             backContent: card.back_content,
             match: matchInFront ? card.front_content : card.back_content,
