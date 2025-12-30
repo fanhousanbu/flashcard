@@ -16,7 +16,9 @@
     "import": "导入",
     "optional": "可选",
     "language": "语言",
-    "theme": "主题"
+    "theme": "主题",
+    "close": "关闭",
+    "processing": "处理中..."
   },
   "nav": {
     "myDecks": "我的卡组",
@@ -316,7 +318,20 @@
       "2stars": "2星以上",
       "sortByCreated": "最新发布",
       "sortByRating": "最高评分",
-      "sortByDownloads": "最多下载"
+      "sortByDownloads": "最多下载",
+      "sortByUpdated": "最近更新",
+      "allPrices": "全部价格",
+      "freeOnly": "仅免费"
+    },
+    "categories": {
+      "all": "全部",
+      "language": "语言学习",
+      "programming": "编程开发",
+      "science": "科学知识",
+      "history": "历史文化",
+      "math": "数学",
+      "exam": "考试备考",
+      "other": "其他"
     },
     "deck": {
       "author": "作者",
@@ -331,14 +346,38 @@
       "viewDetails": "查看详情",
       "noDescription": "暂无描述",
       "buyAndImport": "购买",
+      "buy": "购买",
       "unknownAuthor": "未知",
       "rateSuccess": "评分成功！",
-      "rateFailed": "评分失败"
+      "rateFailed": "评分失败",
+      "purchased": "已购买"
+    },
+    "detail": {
+      "author": "作者",
+      "downloads": "次下载",
+      "cards": "张卡片",
+      "description": "描述",
+      "previewCards": "预览卡片",
+      "front": "正面",
+      "back": "背面",
+      "moreCards": "更多卡片",
+      "yourRating": "你的评分",
+      "ratings": "人评分",
+      "buyFor": "¥{{price}} 购买",
+      "importDeck": "导入卡组",
+      "purchaseRequired": "请先购买此卡组",
+      "purchaseSuccess": "购买成功！",
+      "purchaseFailed": "购买失败",
+      "favoriteFailed": "收藏操作失败",
+      "addToFavorites": "添加收藏",
+      "removeFromFavorites": "取消收藏"
     },
     "publish": {
       "title": "发布卡组",
       "deckTitle": "卡组标题",
       "description": "描述",
+      "category": "分类",
+      "noCategory": "无分类",
       "price": "价格（0为免费）",
       "priceInYuan": "价格（元，0 为免费）",
       "publishButton": "发布",
@@ -353,6 +392,25 @@
       "pleaseSelect": "请选择",
       "titlePlaceholder": "给你的卡组起个吸引人的标题",
       "descriptionPlaceholder": "描述卡组的内容和特点"
+    },
+    "author": {
+      "title": "作者管理后台",
+      "subtitle": "管理你已发布的市场卡组",
+      "totalDecks": "已发布",
+      "totalDownloads": "总下载量",
+      "totalSales": "总销量",
+      "totalRevenue": "总收入",
+      "myDecks": "我发布的卡组",
+      "noDecks": "你还没有发布任何卡组",
+      "publishFirst": "前往市场发布",
+      "editDeck": "编辑卡组",
+      "unpublish": "取消发布",
+      "unpublishConfirm": "确定要取消发布此卡组吗？",
+      "unpublishSuccess": "卡组已取消发布",
+      "unpublishFailed": "取消发布失败",
+      "updateSuccess": "卡组更新成功",
+      "updateFailed": "更新卡组失败",
+      "link": "作者后台"
     }
   },
   "tags": {
@@ -442,6 +500,7 @@
       "accountSettings": "账号设置",
       "studyPreferences": "学习偏好",
       "appSettings": "应用设置",
+      "authorDashboard": "作者后台",
       "logout": "退出登录"
     },
     "stats": {

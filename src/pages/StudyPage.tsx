@@ -4,10 +4,13 @@ import { useStudySession } from '../features/study/hooks/useStudySession';
 import { AppLayout } from '../components/layout/AppLayout';
 import { Loading } from '../components/common/Loading';
 import { FlipCard } from '../components/common/FlipCard';
+import { ClozeCard } from '../components/common/ClozeCard';
 import { qualityColors } from '../features/study/algorithms/sm2';
+import { renderClozeFront, renderClozeBack } from '../features/cards/utils/clozeParser';
 import ReactMarkdown from 'react-markdown';
 import { toast } from '../hooks/useToast';
 import { useTranslation } from 'react-i18next';
+import type { StudyCard } from '../features/study/utils/studyCards';
 
 export function StudyPage() {
   const { deckId } = useParams<{ deckId: string }>();
@@ -27,7 +30,7 @@ export function StudyPage() {
   } = useStudySession();
 
   // State for mode selection before starting session
-  const [selectedMode, setSelectedMode] = useState<'spaced-repetition' | 'simple-review'>('spaced-repetition');
+  const [selectedMode, setSelectedMode] = useState<'spaced-repetition' | 'simple-review' | 'fsrs'>('fsrs');
   const [showModeSelection, setShowModeSelection] = useState(true);
   const [isStarting, setIsStarting] = useState(false);
   const [showNoDueCards, setShowNoDueCards] = useState(false);
@@ -63,7 +66,7 @@ export function StudyPage() {
     }
   };
 
-  const handleSelectMode = (mode: 'spaced-repetition' | 'simple-review') => {
+  const handleSelectMode = (mode: 'spaced-repetition' | 'simple-review' | 'fsrs') => {
     setSelectedMode(mode);
   };
 
@@ -245,6 +248,47 @@ export function StudyPage() {
                   </div>
                 </div>
               </button>
+
+              {/* FSRS Mode */}
+              <button
+                onClick={() => handleSelectMode('fsrs')}
+                className={`w-full p-4 text-left rounded-xl border-2 transition-all ${
+                  selectedMode === 'fsrs'
+                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                    : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  {/* Radio button on the left */}
+                  <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                    selectedMode === 'fsrs'
+                      ? 'border-blue-500 bg-blue-500'
+                      : 'border-gray-300 dark:border-gray-600'
+                  }`}>
+                    {selectedMode === 'fsrs' && (
+                      <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-xl shrink-0">⚡</span>
+                      <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100 whitespace-nowrap">
+                        FSRS
+                      </h3>
+                      <span className="text-xs px-2 py-0.5 bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300 rounded-full">
+                        New
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+                      {t('study.modeFsrsDesc') || 'Next-generation spaced repetition with optimized memory retention'}
+                    </p>
+                  </div>
+                </div>
+              </button>
             </div>
 
             {/* Start Learning Button - always visible */}
@@ -283,6 +327,15 @@ export function StudyPage() {
             <span className="text-2xl font-bold text-gray-900 dark:text-gray-100">
               {currentIndex + 1} of {totalCards}
             </span>
+            {/* Card type indicator (for cloze cards) */}
+            {(currentCard as StudyCard)?.type === 'cloze' && (
+              <span className="px-3 py-1 text-sm font-semibold rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200">
+                {(currentCard as StudyCard)?.clozeFieldIndex !== undefined &&
+                 (currentCard as StudyCard)?.clozeTotalFields !== undefined
+                  ? `Cloze ${(currentCard as StudyCard).clozeFieldIndex + 1}/${(currentCard as StudyCard).clozeTotalFields}`
+                  : 'Cloze'}
+              </span>
+            )}
             {/* Front/Back label */}
             <span className={`px-3 py-1 text-sm font-semibold rounded-full ${
               isFlipped
@@ -327,20 +380,49 @@ export function StudyPage() {
 
         {/* Core interaction area - flip card */}
         <div className="mb-4">
-          <FlipCard
-          frontContent={
-            <div className="prose prose-lg dark:prose-invert max-w-none">
-              <ReactMarkdown>{currentCard?.front_content || ''}</ReactMarkdown>
+          {(currentCard as StudyCard)?.type === 'cloze' ? (
+            // Cloze card rendering
+            <div className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 rounded-lg p-6 min-h-[280px] flex flex-col justify-center">
+              <div className="text-center mb-4">
+                <span className="text-xs uppercase text-gray-500 dark:text-gray-400">{t('study.front')}</span>
+              </div>
+              <div className="text-center text-lg text-gray-900 dark:text-gray-100 mb-6">
+                <ReactMarkdown>
+                  {renderClozeFront((currentCard as StudyCard).clozeData!, (currentCard as StudyCard).clozeFieldId!)}
+                </ReactMarkdown>
+              </div>
+              {isFlipped && (
+                <>
+                  <div className="border-t border-gray-200 dark:border-gray-600 pt-4">
+                    <div className="text-center mb-2">
+                      <span className="text-xs uppercase text-gray-500 dark:text-gray-400">{t('study.back')}</span>
+                    </div>
+                    <div className="text-center text-lg">
+                      <ReactMarkdown>
+                        {renderClozeBack((currentCard as StudyCard).clozeData!, (currentCard as StudyCard).clozeFieldId!)}
+                      </ReactMarkdown>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
-          }
-          backContent={
-            <div className="prose prose-lg dark:prose-invert max-w-none">
-              <ReactMarkdown>{currentCard?.back_content || ''}</ReactMarkdown>
-            </div>
-          }
-          isFlipped={isFlipped}
-          onFlip={flipCard}
-        />
+          ) : (
+            // Basic card rendering
+            <FlipCard
+              frontContent={
+                <div className="prose prose-lg dark:prose-invert max-w-none">
+                  <ReactMarkdown>{currentCard?.front_content || ''}</ReactMarkdown>
+                </div>
+              }
+              backContent={
+                <div className="prose prose-lg dark:prose-invert max-w-none">
+                  <ReactMarkdown>{currentCard?.back_content || ''}</ReactMarkdown>
+                </div>
+              }
+              isFlipped={isFlipped}
+              onFlip={flipCard}
+            />
+          )}
         </div>
 
         {/* Bottom review feedback area */}
@@ -396,17 +478,36 @@ export function StudyPage() {
               )}
             </div>
           ) : (
-            // Show back: display flip to front button
-            <div className="flex justify-center">
-              <button
-                onClick={flipCard}
-                className="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 transition-colors dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-                <span>{t('study.flipToFront')}</span>
-              </button>
+            // Show back: display rating buttons and flip to front button
+            <div className="space-y-3">
+              {/* Rating buttons */}
+              <div className="space-y-2">
+                <div className="flex justify-center gap-2 sm:gap-3">
+                  {[0, 1, 2, 3, 4, 5].map((quality) => (
+                    <button
+                      key={quality}
+                      onClick={() => handleRate(quality)}
+                      className={`${qualityColors[quality as keyof typeof qualityColors]} hover:opacity-90 text-white py-2 px-3 sm:px-4 rounded-lg text-xs font-medium transition-all shadow-sm flex-1 max-w-[60px]`}
+                      title={t(`study.quality.${quality}`)}
+                    >
+                      {quality}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Flip to front button */}
+              <div className="flex justify-center">
+                <button
+                  onClick={flipCard}
+                  className="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 transition-colors dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  <span>{t('study.flipToFront')}</span>
+                </button>
+              </div>
             </div>
           )}
         </div>

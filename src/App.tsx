@@ -7,12 +7,14 @@ import { StudyPage } from './pages/StudyPage';
 import { StatsPage } from './pages/StatsPage';
 import { TagsPage } from './pages/TagsPage';
 import { MarketplacePage } from './pages/MarketplacePage';
+import { AuthorDashboardPage } from './pages/AuthorDashboardPage';
 import { VerifyEmailPage } from './pages/VerifyEmailPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { EditProfilePage } from './pages/profile/EditProfilePage';
 import { AccountPage } from './pages/profile/AccountPage';
 import { PreferencesPage } from './pages/profile/PreferencesPage';
 import { AppSettingsPage } from './pages/profile/AppSettingsPage';
+import { CardBrowserPage } from './pages/CardBrowserPage';
 import { LoginForm } from './features/auth/components/LoginForm';
 import { SignupForm } from './features/auth/components/SignupForm';
 import { ProtectedRoute } from './routes/ProtectedRoute';
@@ -85,6 +87,15 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="/marketplace/author"
+            element={
+              <ProtectedRoute>
+                <AuthorDashboardPage />
+              </ProtectedRoute>
+            }
+          />
           
           <Route
             path="/stats"
@@ -100,6 +111,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <TagsPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/browser"
+            element={
+              <ProtectedRoute>
+                <CardBrowserPage />
               </ProtectedRoute>
             }
           />

@@ -62,6 +62,12 @@ export function Header() {
                   {t('nav.tagManagement')}
                 </Link>
                 <Link
+                  to="/browser"
+                  className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium"
+                >
+                  {t('nav.cardBrowser') || 'Browser'}
+                </Link>
+                <Link
                   to="/marketplace"
                   className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium"
                 >

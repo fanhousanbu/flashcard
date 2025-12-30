@@ -22,7 +22,7 @@ export type SM2Result = {
   nextReviewDate: Date;
 };
 
-export type StudyMode = 'spaced-repetition' | 'simple-review';
+export type StudyMode = 'spaced-repetition' | 'simple-review' | 'fsrs';
 
 export type StudySession = {
   deckId: string;

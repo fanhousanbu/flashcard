@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="card-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#1D4ED8"/>
+    </linearGradient>
+  </defs>
+  <!-- Background card shape -->
+  <rect x="64" y="80" width="384" height="352" rx="24" fill="url(#card-gradient)"/>
+
+  <!-- Inner card -->
+  <rect x="96" y="112" width="320" height="224" rx="16" fill="#ffffff" opacity="0.9"/>
+
+  <!-- Flash/Spark icon -->
+  <g transform="translate(256, 224)">
+    <path d="M-8 -24 L-4 -8 L8 12 L16 -8 L8 -32 L-8 -24 Z" fill="#F59E0B"/>
+    <circle cx="0" cy="0" r="6" fill="#FCD34D"/>
+  </g>
+
+  <!-- Brain dots pattern (representing memory) -->
+  <circle cx="120" cy="280" r="4" fill="#3B82F6"/>
+  <circle cx="130" cy="280" r="4" fill="#3B82F6"/>
+  <circle cx="140" cy="280" r="4" fill="#3B82F6"/>
+
+  <circle cx="120" cy="292" r="4" fill="#3B82F6"/>
+  <circle cx="130" cy="292" r="4" fill="#3B82F6"/>
+  <circle cx="140" cy="292" r="4" fill="#3B82F6"/>
+
+  <circle cx="372" cy="280" r="4" fill="#3B82F6"/>
+  <circle cx="382" cy="280" r="4" fill="#3B82F6"/>
+  <circle cx="392" cy="280" r="4" fill="#3B82F6"/>
+
+  <circle cx="372" cy="292" r="4" fill="#3B82F6"/>
+  <circle cx="382" cy="292" r="4" fill="#3B82F6"/>
+  <circle cx="392" cy="292" r="4" fill="#3B82F6"/>
+</svg>

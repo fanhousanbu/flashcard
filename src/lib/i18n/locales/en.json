@@ -16,7 +16,9 @@
     "import": "Import",
     "optional": "Optional",
     "language": "Language",
-    "theme": "Theme"
+    "theme": "Theme",
+    "close": "Close",
+    "processing": "Processing..."
   },
   "nav": {
     "myDecks": "My Decks",
@@ -314,7 +316,20 @@
       "2stars": "2+ Stars",
       "sortByCreated": "Newest First",
       "sortByRating": "Highest Rated",
-      "sortByDownloads": "Most Downloaded"
+      "sortByDownloads": "Most Downloaded",
+      "sortByUpdated": "Recently Updated",
+      "allPrices": "All Prices",
+      "freeOnly": "Free Only"
+    },
+    "categories": {
+      "all": "All",
+      "language": "Language",
+      "programming": "Programming",
+      "science": "Science",
+      "history": "History",
+      "math": "Math",
+      "exam": "Exam Prep",
+      "other": "Other"
     },
     "deck": {
       "author": "Author",
@@ -329,14 +344,38 @@
       "viewDetails": "View Details",
       "noDescription": "No description provided",
       "buyAndImport": "Buy",
+      "buy": "Buy",
       "unknownAuthor": "Unknown",
       "rateSuccess": "Rating submitted successfully!",
-      "rateFailed": "Failed to submit rating"
+      "rateFailed": "Failed to submit rating",
+      "purchased": "Purchased"
+    },
+    "detail": {
+      "author": "Author",
+      "downloads": "downloads",
+      "cards": "cards",
+      "description": "Description",
+      "previewCards": "Preview Cards",
+      "front": "Front",
+      "back": "Back",
+      "moreCards": "more cards",
+      "yourRating": "Your Rating",
+      "ratings": "ratings",
+      "buyFor": "Buy ¥{{price}}",
+      "importDeck": "Import Deck",
+      "purchaseRequired": "Please purchase this deck first",
+      "purchaseSuccess": "Purchase successful!",
+      "purchaseFailed": "Purchase failed",
+      "favoriteFailed": "Failed to update favorite",
+      "addToFavorites": "Add to favorites",
+      "removeFromFavorites": "Remove from favorites"
     },
     "publish": {
       "title": "Publish Deck",
       "deckTitle": "Deck Title",
       "description": "Description",
+      "category": "Category",
+      "noCategory": "No Category",
       "price": "Price (0 for free)",
       "priceInYuan": "Price (¥, 0 for free)",
       "publishButton": "Publish",
@@ -351,6 +390,25 @@
       "pleaseSelect": "Please select",
       "titlePlaceholder": "Give your deck an attractive title",
       "descriptionPlaceholder": "Describe the content and features of the deck"
+    },
+    "author": {
+      "title": "Author Dashboard",
+      "subtitle": "Manage your published marketplace decks",
+      "totalDecks": "Published Decks",
+      "totalDownloads": "Total Downloads",
+      "totalSales": "Total Sales",
+      "totalRevenue": "Total Revenue",
+      "myDecks": "My Published Decks",
+      "noDecks": "You haven't published any decks yet",
+      "publishFirst": "Go to marketplace to publish",
+      "editDeck": "Edit Deck",
+      "unpublish": "Unpublish",
+      "unpublishConfirm": "Are you sure you want to unpublish this deck?",
+      "unpublishSuccess": "Deck unpublished successfully",
+      "unpublishFailed": "Failed to unpublish deck",
+      "updateSuccess": "Deck updated successfully",
+      "updateFailed": "Failed to update deck",
+      "link": "Author Dashboard"
     }
   },
   "tags": {
@@ -440,6 +498,7 @@
       "accountSettings": "Account Settings",
       "studyPreferences": "Study Preferences",
       "appSettings": "App Settings",
+      "authorDashboard": "Author Dashboard",
       "logout": "Logout"
     },
     "stats": {

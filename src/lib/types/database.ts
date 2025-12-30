@@ -88,6 +88,8 @@ export type Database = {
           position: number;
           created_at: string;
           deleted_at: string | null;
+          card_type: 'basic' | 'cloze';
+          cloze_data: Record<string, unknown> | null;
         };
         Insert: {
           id?: string;
@@ -97,6 +99,8 @@ export type Database = {
           position: number;
           created_at?: string;
           deleted_at?: string | null;
+          card_type?: 'basic' | 'cloze';
+          cloze_data?: Record<string, unknown> | null;
         };
         Update: {
           id?: string;
@@ -106,6 +110,8 @@ export type Database = {
           position?: number;
           created_at?: string;
           deleted_at?: string | null;
+          card_type?: 'basic' | 'cloze';
+          cloze_data?: Record<string, unknown> | null;
         };
       };
       study_records: {
@@ -121,6 +127,9 @@ export type Database = {
           last_quality: number | null;
           total_reviews: number;
           correct_reviews: number;
+          stability: number;
+          difficulty: number;
+          answer_time_ms: number;
         };
         Insert: {
           id?: string;
@@ -134,6 +143,9 @@ export type Database = {
           last_quality?: number | null;
           total_reviews?: number;
           correct_reviews?: number;
+          stability?: number;
+          difficulty?: number;
+          answer_time_ms?: number;
         };
         Update: {
           id?: string;
@@ -147,6 +159,9 @@ export type Database = {
           last_quality?: number | null;
           total_reviews?: number;
           correct_reviews?: number;
+          stability?: number;
+          difficulty?: number;
+          answer_time_ms?: number;
         };
       };
       marketplace_decks: {

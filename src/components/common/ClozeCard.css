@@ -1,0 +1,207 @@
+/* Cloze card container */
+.cloze-card-container {
+  width: 100%;
+  perspective: 1000px;
+  margin-bottom: 0;
+}
+
+/* Cloze card */
+.cloze-card {
+  width: 100%;
+  min-height: 280px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+  cursor: pointer;
+}
+
+.cloze-card.flipped {
+  transform: rotateY(180deg);
+}
+
+/* Card inner container */
+.cloze-card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+/* Card faces (front and back) */
+.cloze-card-face {
+  width: 100%;
+  min-height: 280px;
+  position: absolute;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 16px;
+  background: white;
+  border: 2px solid #e5e7eb;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Dark mode */
+:global(html.dark) .cloze-card-face {
+  background: #1f2937 !important;
+  border-color: #374151 !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Front side */
+.cloze-card-front {
+  z-index: 2;
+}
+
+/* Back side */
+.cloze-card-back {
+  transform: rotateY(180deg);
+}
+
+/* Card content */
+.cloze-card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* Card header with labels */
+.cloze-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.cloze-card-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+:global(html.dark) .cloze-card-label {
+  color: #9ca3af !important;
+}
+
+/* Field indicator showing which cloze (e.g., "1/3") */
+.cloze-field-indicator {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #667eea;
+  background: #eef2ff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+:global(html.dark) .cloze-field-indicator {
+  color: #818cf8;
+  background: #312e81;
+}
+
+/* Card text content */
+.cloze-card-text {
+  font-size: 1.5rem;
+  line-height: 1.8;
+  color: #111827;
+  text-align: center;
+  padding: 1rem 0;
+  font-weight: 500;
+}
+
+:global(html.dark) .cloze-card-text {
+  color: #f3f4f6 !important;
+}
+
+/* The answer display (large centered) */
+.cloze-card-text :global(strong) {
+  color: #667eea;
+  font-weight: 600;
+}
+
+:global(html.dark) .cloze-card-text :global(strong) {
+  color: #818cf8 !important;
+}
+
+/* Full text display with context */
+.cloze-card-full-text {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: #374151;
+  text-align: center;
+  padding: 1rem;
+  background: #f9fafb;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+:global(html.dark) .cloze-card-full-text {
+  color: #d1d5db;
+  background: #374151;
+  border-left-color: #818cf8;
+}
+
+/* Markdown styles within cloze cards */
+.cloze-card-full-text :global(.prose) {
+  color: #374151;
+}
+
+:global(html.dark) .cloze-card-full-text :global(.prose) {
+  color: #d1d5db !important;
+}
+
+.cloze-card-full-text :global(.prose strong) {
+  color: #667eea;
+}
+
+:global(html.dark) .cloze-card-full-text :global(.prose strong) {
+  color: #818cf8 !important;
+}
+
+/* Blank placeholder styling */
+.cloze-card-text :global(code),
+.cloze-card-full-text :global(code) {
+  background: #eef2ff;
+  color: #667eea;
+  padding: 0.125rem 0.375rem;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+:global(html.dark) .cloze-card-text :global(code),
+:global(html.dark) .cloze-card-full-text :global(code) {
+  background: #312e81;
+  color: #a5b4fc;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .cloze-card-face {
+    min-height: 300px;
+    padding: 1.5rem;
+  }
+
+  .cloze-card-text {
+    font-size: 1rem;
+  }
+
+  .cloze-card-full-text {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+
+  .cloze-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
