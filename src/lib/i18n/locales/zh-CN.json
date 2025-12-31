@@ -169,7 +169,20 @@
     "switchToChinese": "切换到中文",
     "notFound": "卡组不存在",
     "filterByTagLabel": "按标签筛选",
-    "foundResults": "找到 {{count}} / 共 {{total}} 张卡片"
+    "foundResults": "找到 {{count}} / 共 {{total}} 张卡片",
+    "cardType": "卡片类型",
+    "basicCard": "基础卡片",
+    "clozeCard": "填空卡片",
+    "clozeContent": "填空内容",
+    "clozeHint": "使用 {{c1::答案}} 格式",
+    "clozeSyntaxHelp": "填空语法说明",
+    "clozeBasic": "基础填空",
+    "clozeWithHint": "带提示的填空",
+    "clozeFieldCount": "将创建",
+    "card": "张卡片",
+    "clozePreviewOf": "预览",
+    "clozeContentRequired": "填空内容不能为空",
+    "contentRequired": "正面和背面内容不能为空"
   },
   "study": {
     "title": "学习会话",
@@ -425,6 +438,7 @@
   },
   "tags": {
     "title": "标签管理",
+    "label": "标签",
     "addTag": "添加标签",
     "createNewTag": "创建新标签",
     "create": "创建标签",

@@ -435,180 +435,30 @@ export function DecksPage() {
       )}
 
       {showCardModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-gray-200 dark:border-gray-700">
-            <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">{t('deck.modalTitle')}</h2>
-            <form onSubmit={handleCreateCard}>
-              {/* Card type selector */}
-              <div className="mb-4">
-                <label className="block text-gray-700 dark:text-gray-300 mb-2">{t('deck.cardType') || 'Card Type'}</label>
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setCardType('basic')}
-                    className={`flex-1 px-4 py-2 rounded-lg font-medium transition-colors ${
-                      cardType === 'basic'
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
-                    }`}
-                  >
-                    {t('deck.basicCard') || 'Basic'}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setCardType('cloze')}
-                    className={`flex-1 px-4 py-2 rounded-lg font-medium transition-colors ${
-                      cardType === 'cloze'
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
-                    }`}
-                  >
-                    {t('deck.clozeCard') || 'Cloze'}
-                  </button>
-                </div>
+        <>
+          {/* Mobile: Drawer */}
+          <div className="md:hidden">
+            <div
+              className="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 z-40"
+              onClick={() => {
+                setShowCardModal(false);
+                setCardType('basic');
+                setFrontContent('');
+                setBackContent('');
+                setClozeContent('');
+                setSelectedTags([]);
+              }}
+            />
+            <div className="fixed inset-x-0 bottom-0 z-50 bg-white dark:bg-gray-800 rounded-t-2xl shadow-2xl max-h-[90vh] flex flex-col animate-slide-up">
+              {/* Handle bar */}
+              <div className="flex justify-center pt-3 pb-2">
+                <div className="w-12 h-1 bg-gray-300 dark:bg-gray-600 rounded-full" />
               </div>
-
-              {cardType === 'basic' ? (
-                // Basic card inputs
-                <div className="grid md:grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <label className="block text-gray-700 dark:text-gray-300 mb-2">{t('deck.frontContent')}</label>
-                    <textarea
-                      required
-                      value={frontContent}
-                      onChange={(e) => setFrontContent(e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                      rows={10}
-                      placeholder={t('deck.frontExample')}
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-gray-700 dark:text-gray-300 mb-2">{t('deck.backContent')}</label>
-                    <textarea
-                      required
-                      value={backContent}
-                      onChange={(e) => setBackContent(e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                      rows={10}
-                      placeholder={t('deck.backExample')}
-                    />
-                  </div>
-                </div>
-              ) : (
-                // Cloze card input
-                <div className="mb-4">
-                  <label className="block text-gray-700 dark:text-gray-300 mb-2">
-                    {t('deck.clozeContent') || 'Cloze Content'}
-                    <span className="text-gray-500 dark:text-gray-400 ml-2 text-sm">
-                      ({t('deck.clozeHint') || 'Use {{c1::answer}} format'})
-                    </span>
-                  </label>
-                  <textarea
-                    required
-                    value={clozeContent}
-                    onChange={(e) => setClozeContent(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                    rows={10}
-                    placeholder="{{c1::Paris}} is the capital of {{c2::France}}."
-                  />
-                  {/* Cloze help */}
-                  <div className="mt-2 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-sm text-blue-800 dark:text-blue-300">
-                    <p className="font-semibold mb-1">{t('deck.clozeSyntaxHelp') || 'Cloze Syntax:'}</p>
-                    <ul className="list-disc list-inside space-y-1">
-                      <li><code className="bg-white dark:bg-gray-800 px-1 rounded">{"{{c1::answer}}"}</code> - {t('deck.clozeBasic') || 'Basic cloze'}</li>
-                      <li><code className="bg-white dark:bg-gray-800 px-1 rounded">{"{{c2::answer::hint}}"}</code> - {t('deck.clozeWithHint') || 'Cloze with hint'}</li>
-                    </ul>
-                  </div>
-                  {/* Cloze field count */}
-                  {clozeFieldCount > 0 && (
-                    <div className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                      {t('deck.clozeFieldCount') || 'This will create'} {clozeFieldCount} {clozeFieldCount === 1 ? t('deck.card') || 'card' : t('deck.cards') || 'cards'}
-                    </div>
-                  )}
-                  {/* Validation errors */}
-                  {!clozeValidation.valid && (
-                    <div className="mt-2 text-sm text-red-600 dark:text-red-400">
-                      {clozeValidation.errors.join(', ')}
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Tag selection */}
-              <div className="mb-4">
-                <label className="block text-gray-700 dark:text-gray-300 mb-2">{t('tag.label')}</label>
-                <TagSelector
-                  selectedTags={selectedTags}
-                  onTagSelect={(tag) => setSelectedTags(prev => [...prev, tag])}
-                  onTagRemove={(tag) => setSelectedTags(prev => prev.filter(t => t.id !== tag.id))}
-                />
-              </div>
-
-              {/* Live preview */}
-              {cardType === 'basic' && (frontContent || backContent) && (
-                <div className="mb-4">
-                  <label className="block text-gray-700 dark:text-gray-300 mb-2">{t('deck.previewLabel')}</label>
-                  <FlipCard
-                    frontContent={
-                      <div className="prose prose-sm dark:prose-invert max-w-none">
-                        <ReactMarkdown>{frontContent || t('deck.front')}</ReactMarkdown>
-                      </div>
-                    }
-                    backContent={
-                      <div className="prose prose-sm dark:prose-invert max-w-none">
-                        <ReactMarkdown>{backContent || t('deck.back')}</ReactMarkdown>
-                      </div>
-                    }
-                    isFlipped={previewMode === 'back'}
-                    onFlip={() => setPreviewMode(previewMode === 'front' ? 'back' : 'front')}
-                    showBothSides={true}
-                  />
-                </div>
-              )}
-
-              {/* Cloze preview */}
-              {cardType === 'cloze' && parsedCloze && clozeFieldCount > 0 && (
-                <div className="mb-4">
-                  <label className="block text-gray-700 dark:text-gray-300 mb-2">
-                    {t('deck.previewLabel')} ({t('deck.clozePreviewOf') || 'Preview of'} Cloze 1/{clozeFieldCount})
-                  </label>
-                  <div className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 rounded-lg p-6">
-                    <div className="text-center mb-4">
-                      <span className="text-xs uppercase text-gray-500 dark:text-gray-400">{t('study.front')}</span>
-                    </div>
-                    <div className="text-center text-lg text-gray-900 dark:text-gray-100 mb-4">
-                      <ReactMarkdown>{renderClozeFront(parsedCloze, 'c1')}</ReactMarkdown>
-                    </div>
-                    <div className="border-t border-gray-200 dark:border-gray-600 pt-4">
-                      <div className="text-center mb-2">
-                        <span className="text-xs uppercase text-gray-500 dark:text-gray-400">{t('study.back')}</span>
-                      </div>
-                      <div className="text-center text-lg">
-                        <ReactMarkdown>{renderClozeBack(parsedCloze, 'c1')}</ReactMarkdown>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <div className="flex space-x-2">
-                {cardType === 'basic' && (
-                  <button
-                    type="button"
-                    onClick={() => setPreviewMode(previewMode === 'front' ? 'back' : 'front')}
-                    className="bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg"
-                  >
-                    {t('deck.togglePreview')}
-                  </button>
-                )}
+              
+              {/* Header */}
+              <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+                <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">{t('deck.modalTitle')}</h2>
                 <button
-                  type="submit"
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
-                >
-                  {t('common.create')}
-                </button>
-                <button
-                  type="button"
                   onClick={() => {
                     setShowCardModal(false);
                     setCardType('basic');
@@ -617,16 +467,348 @@ export function DecksPage() {
                     setClozeContent('');
                     setSelectedTags([]);
                   }}
-                  className="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg"
+                  className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
                 >
-                  {t('common.cancel')}
+                  <svg className="w-6 h-6 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
                 </button>
               </div>
-            </form>
+              
+              {/* Content - Scrollable area */}
+              <div className="flex-1 overflow-y-auto px-4 py-4">
+                <form onSubmit={handleCreateCard} id="mobile-card-form">
+                  {/* Card type selector */}
+                  <div className="mb-4">
+                    <label className="block text-gray-700 dark:text-gray-300 mb-2 text-sm font-medium">{t('deck.cardType')}</label>
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setCardType('basic')}
+                        className={`flex-1 px-4 py-2.5 rounded-lg font-medium transition-colors text-sm ${
+                          cardType === 'basic'
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
+                        }`}
+                      >
+                        {t('deck.basicCard')}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setCardType('cloze')}
+                        className={`flex-1 px-4 py-2.5 rounded-lg font-medium transition-colors text-sm ${
+                          cardType === 'cloze'
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
+                        }`}
+                      >
+                        {t('deck.clozeCard')}
+                      </button>
+                    </div>
+                  </div>
+
+                  {cardType === 'basic' ? (
+                    // Basic card inputs
+                    <div className="space-y-4 mb-4">
+                      <div>
+                        <label className="block text-gray-700 dark:text-gray-300 mb-2 text-sm font-medium">{t('deck.frontContent')}</label>
+                        <textarea
+                          required
+                          value={frontContent}
+                          onChange={(e) => setFrontContent(e.target.value)}
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                          rows={6}
+                          placeholder={t('deck.frontExample')}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-gray-700 dark:text-gray-300 mb-2 text-sm font-medium">{t('deck.backContent')}</label>
+                        <textarea
+                          required
+                          value={backContent}
+                          onChange={(e) => setBackContent(e.target.value)}
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                          rows={6}
+                          placeholder={t('deck.backExample')}
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    // Cloze card input
+                    <div className="mb-4">
+                      <label className="block text-gray-700 dark:text-gray-300 mb-2 text-sm font-medium">
+                        {t('deck.clozeContent')}
+                        <span className="text-gray-500 dark:text-gray-400 ml-2 text-xs">
+                          ({t('deck.clozeHint')})
+                        </span>
+                      </label>
+                      <textarea
+                        required
+                        value={clozeContent}
+                        onChange={(e) => setClozeContent(e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                        rows={8}
+                        placeholder="{{c1::Paris}} is the capital of {{c2::France}}."
+                      />
+                      {/* Cloze help */}
+                      <div className="mt-2 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-xs text-blue-800 dark:text-blue-300">
+                        <p className="font-semibold mb-1">{t('deck.clozeSyntaxHelp')}</p>
+                        <ul className="list-disc list-inside space-y-1">
+                          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">{"{{c1::answer}}"}</code> - {t('deck.clozeBasic')}</li>
+                          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">{"{{c2::answer::hint}}"}</code> - {t('deck.clozeWithHint')}</li>
+                        </ul>
+                      </div>
+                      {/* Cloze field count */}
+                      {clozeFieldCount > 0 && (
+                        <div className="mt-2 text-xs text-gray-600 dark:text-gray-400">
+                          {t('deck.clozeFieldCount')} {clozeFieldCount} {clozeFieldCount === 1 ? t('deck.card') : t('deck.cards')}
+                        </div>
+                      )}
+                      {/* Validation errors */}
+                      {!clozeValidation.valid && (
+                        <div className="mt-2 text-xs text-red-600 dark:text-red-400">
+                          {clozeValidation.errors.join(', ')}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Tag selection */}
+                  <div className="mb-4">
+                    <label className="block text-gray-700 dark:text-gray-300 mb-2 text-sm font-medium">{t('tags.label')}</label>
+                    <TagSelector
+                      selectedTags={selectedTags}
+                      onTagSelect={(tag) => setSelectedTags(prev => [...prev, tag])}
+                      onTagRemove={(tag) => setSelectedTags(prev => prev.filter(t => t.id !== tag.id))}
+                    />
+                  </div>
+                </form>
+              </div>
+
+              {/* Footer - Always visible at bottom */}
+              <div className="flex-shrink-0 border-t border-gray-200 dark:border-gray-700 px-4 py-3 bg-white dark:bg-gray-800">
+                <div className="flex gap-2">
+                  <button
+                    type="submit"
+                    form="mobile-card-form"
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg font-medium text-sm"
+                  >
+                    {t('common.create')}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowCardModal(false);
+                      setCardType('basic');
+                      setFrontContent('');
+                      setBackContent('');
+                      setClozeContent('');
+                      setSelectedTags([]);
+                    }}
+                    className="flex-1 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2.5 rounded-lg font-medium text-sm"
+                  >
+                    {t('common.cancel')}
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+
+          {/* Desktop: Modal */}
+          <div className="hidden md:block">
+            <div className="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 flex items-center justify-center z-50 p-4">
+              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-gray-200 dark:border-gray-700">
+                <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">{t('deck.modalTitle')}</h2>
+                <form onSubmit={handleCreateCard}>
+                  {/* Card type selector */}
+                  <div className="mb-4">
+                    <label className="block text-gray-700 dark:text-gray-300 mb-2">{t('deck.cardType')}</label>
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setCardType('basic')}
+                        className={`flex-1 px-4 py-2 rounded-lg font-medium transition-colors ${
+                          cardType === 'basic'
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
+                        }`}
+                      >
+                        {t('deck.basicCard')}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setCardType('cloze')}
+                        className={`flex-1 px-4 py-2 rounded-lg font-medium transition-colors ${
+                          cardType === 'cloze'
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600'
+                        }`}
+                      >
+                        {t('deck.clozeCard')}
+                      </button>
+                    </div>
+                  </div>
+
+                  {cardType === 'basic' ? (
+                    // Basic card inputs
+                    <div className="grid md:grid-cols-2 gap-4 mb-4">
+                      <div>
+                        <label className="block text-gray-700 dark:text-gray-300 mb-2">{t('deck.frontContent')}</label>
+                        <textarea
+                          required
+                          value={frontContent}
+                          onChange={(e) => setFrontContent(e.target.value)}
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                          rows={10}
+                          placeholder={t('deck.frontExample')}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-gray-700 dark:text-gray-300 mb-2">{t('deck.backContent')}</label>
+                        <textarea
+                          required
+                          value={backContent}
+                          onChange={(e) => setBackContent(e.target.value)}
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                          rows={10}
+                          placeholder={t('deck.backExample')}
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    // Cloze card input
+                    <div className="mb-4">
+                      <label className="block text-gray-700 dark:text-gray-300 mb-2">
+                        {t('deck.clozeContent')}
+                        <span className="text-gray-500 dark:text-gray-400 ml-2 text-sm">
+                          ({t('deck.clozeHint')})
+                        </span>
+                      </label>
+                      <textarea
+                        required
+                        value={clozeContent}
+                        onChange={(e) => setClozeContent(e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                        rows={10}
+                        placeholder="{{c1::Paris}} is the capital of {{c2::France}}."
+                      />
+                      {/* Cloze help */}
+                      <div className="mt-2 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-sm text-blue-800 dark:text-blue-300">
+                        <p className="font-semibold mb-1">{t('deck.clozeSyntaxHelp')}</p>
+                        <ul className="list-disc list-inside space-y-1">
+                          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">{"{{c1::answer}}"}</code> - {t('deck.clozeBasic')}</li>
+                          <li><code className="bg-white dark:bg-gray-800 px-1 rounded">{"{{c2::answer::hint}}"}</code> - {t('deck.clozeWithHint')}</li>
+                        </ul>
+                      </div>
+                      {/* Cloze field count */}
+                      {clozeFieldCount > 0 && (
+                        <div className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                          {t('deck.clozeFieldCount')} {clozeFieldCount} {clozeFieldCount === 1 ? t('deck.card') : t('deck.cards')}
+                        </div>
+                      )}
+                      {/* Validation errors */}
+                      {!clozeValidation.valid && (
+                        <div className="mt-2 text-sm text-red-600 dark:text-red-400">
+                          {clozeValidation.errors.join(', ')}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Tag selection */}
+                  <div className="mb-4">
+                    <label className="block text-gray-700 dark:text-gray-300 mb-2">{t('tags.label')}</label>
+                    <TagSelector
+                      selectedTags={selectedTags}
+                      onTagSelect={(tag) => setSelectedTags(prev => [...prev, tag])}
+                      onTagRemove={(tag) => setSelectedTags(prev => prev.filter(t => t.id !== tag.id))}
+                    />
+                  </div>
+
+                  {/* Live preview */}
+                  {cardType === 'basic' && (frontContent || backContent) && (
+                    <div className="mb-4">
+                      <label className="block text-gray-700 dark:text-gray-300 mb-2">{t('deck.previewLabel')}</label>
+                      <FlipCard
+                        frontContent={
+                          <div className="prose prose-sm dark:prose-invert max-w-none">
+                            <ReactMarkdown>{frontContent || t('deck.front')}</ReactMarkdown>
+                          </div>
+                        }
+                        backContent={
+                          <div className="prose prose-sm dark:prose-invert max-w-none">
+                            <ReactMarkdown>{backContent || t('deck.back')}</ReactMarkdown>
+                          </div>
+                        }
+                        isFlipped={previewMode === 'back'}
+                        onFlip={() => setPreviewMode(previewMode === 'front' ? 'back' : 'front')}
+                        showBothSides={true}
+                      />
+                    </div>
+                  )}
+
+                  {/* Cloze preview */}
+                  {cardType === 'cloze' && parsedCloze && clozeFieldCount > 0 && (
+                    <div className="mb-4">
+                      <label className="block text-gray-700 dark:text-gray-300 mb-2">
+                        {t('deck.previewLabel')} ({t('deck.clozePreviewOf')} Cloze 1/{clozeFieldCount})
+                      </label>
+                      <div className="bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 rounded-lg p-6">
+                        <div className="text-center mb-4">
+                          <span className="text-xs uppercase text-gray-500 dark:text-gray-400">{t('study.front')}</span>
+                        </div>
+                        <div className="text-center text-lg text-gray-900 dark:text-gray-100 mb-4">
+                          <ReactMarkdown>{renderClozeFront(parsedCloze, 'c1')}</ReactMarkdown>
+                        </div>
+                        <div className="border-t border-gray-200 dark:border-gray-600 pt-4">
+                          <div className="text-center mb-2">
+                            <span className="text-xs uppercase text-gray-500 dark:text-gray-400">{t('study.back')}</span>
+                          </div>
+                          <div className="text-center text-lg">
+                            <ReactMarkdown>{renderClozeBack(parsedCloze, 'c1')}</ReactMarkdown>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex space-x-2">
+                    {cardType === 'basic' && (
+                      <button
+                        type="button"
+                        onClick={() => setPreviewMode(previewMode === 'front' ? 'back' : 'front')}
+                        className="bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg"
+                      >
+                        {t('deck.togglePreview')}
+                      </button>
+                    )}
+                    <button
+                      type="submit"
+                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+                    >
+                      {t('common.create')}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowCardModal(false);
+                        setCardType('basic');
+                        setFrontContent('');
+                        setBackContent('');
+                        setClozeContent('');
+                        setSelectedTags([]);
+                      }}
+                      className="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg"
+                    >
+                      {t('common.cancel')}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </>
       )}
     </AppLayout>
   );
 }
-

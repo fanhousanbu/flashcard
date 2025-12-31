@@ -169,7 +169,20 @@
     "switchToChinese": "Switch to Chinese",
     "notFound": "Deck does not exist",
     "filterByTagLabel": "Filter by Tag",
-    "foundResults": "Found {{count}} of {{total}} cards"
+    "foundResults": "Found {{count}} of {{total}} cards",
+    "cardType": "Card Type",
+    "basicCard": "Basic Card",
+    "clozeCard": "Cloze Card",
+    "clozeContent": "Cloze Content",
+    "clozeHint": "Use {{c1::answer}} format",
+    "clozeSyntaxHelp": "Cloze Syntax",
+    "clozeBasic": "Basic cloze",
+    "clozeWithHint": "Cloze with hint",
+    "clozeFieldCount": "This will create",
+    "card": "card",
+    "clozePreviewOf": "Preview of",
+    "clozeContentRequired": "Cloze content is required",
+    "contentRequired": "Front and back content are required"
   },
   "study": {
     "title": "Study Session",
@@ -423,6 +436,7 @@
   },
   "tags": {
     "title": "Tag Management",
+    "label": "Tags",
     "addTag": "Add Tag",
     "createNewTag": "Create New Tag",
     "create": "Create Tag",
