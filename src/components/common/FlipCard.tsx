@@ -56,22 +56,12 @@ export function FlipCard({ frontContent, backContent, isFlipped, onFlip, showBot
         <div className="flip-card-inner">
           {/* Front side */}
           <div className="flip-card-face flip-card-front bg-white dark:!bg-gray-800 border-2 border-gray-200 dark:!border-gray-600">
-            <div className="flip-card-content">
-              <div className="flip-card-label text-gray-600 dark:!text-gray-300">{t('study.front')}</div>
-              <div className="flip-card-text text-gray-900 dark:!text-gray-100">
-                {frontContent}
-              </div>
-            </div>
+            {frontContent}
           </div>
 
           {/* Back side */}
           <div className="flip-card-face flip-card-back bg-white dark:!bg-gray-800 border-2 border-gray-200 dark:!border-gray-600">
-            <div className="flip-card-content">
-              <div className="flip-card-label text-gray-600 dark:!text-gray-300">{t('study.back')}</div>
-              <div className="flip-card-text text-gray-900 dark:!text-gray-100">
-                {backContent}
-              </div>
-            </div>
+            {backContent}
           </div>
         </div>
       </div>

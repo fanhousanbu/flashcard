@@ -484,7 +484,7 @@ export function CardBrowserPage() {
                       <label className="text-xs font-medium text-gray-500 uppercase">
                         {t('study.front')}
                       </label>
-                      <div className="mt-1 p-3 bg-gray-50 dark:bg-gray-700 rounded text-sm">
+                      <div className="mt-1 p-3 bg-gray-50 dark:bg-gray-700 rounded text-sm max-h-48 overflow-y-auto break-words">
                         <ReactMarkdown>{previewCard.front_content}</ReactMarkdown>
                       </div>
                     </div>
@@ -493,7 +493,7 @@ export function CardBrowserPage() {
                         <label className="text-xs font-medium text-gray-500 uppercase">
                           {t('study.back')}
                         </label>
-                        <div className="mt-1 p-3 bg-gray-50 dark:bg-gray-700 rounded text-sm">
+                        <div className="mt-1 p-3 bg-gray-50 dark:bg-gray-700 rounded text-sm max-h-48 overflow-y-auto break-words">
                           <ReactMarkdown>{previewCard.back_content}</ReactMarkdown>
                         </div>
                       </div>

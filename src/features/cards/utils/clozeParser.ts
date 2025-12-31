@@ -80,7 +80,7 @@ export function renderClozeFront(data: ClozeData, fieldId: string): string {
   result = result.replace(fieldRegex, '[...]');
 
   // Replace all other cloze fields with their answers
-  result = result.replace(CLOZE_REGEX, (_, id, answer) => answer);
+  result = result.replace(CLOZE_REGEX, (_, _id, answer) => answer);
 
   return result;
 }

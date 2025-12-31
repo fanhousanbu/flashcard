@@ -345,7 +345,7 @@ export function DecksPage() {
                     key={card.id}
                     frontContent={
                       <>
-                        <div className="prose prose-sm dark:prose-invert max-w-none">
+                        <div className="prose prose-sm dark:prose-invert max-w-none max-h-48 overflow-y-auto break-words">
                           <ReactMarkdown>{card.front_content}</ReactMarkdown>
                         </div>
                         {/* Tag display */}
@@ -360,7 +360,7 @@ export function DecksPage() {
                     }
                     backContent={
                       <>
-                        <div className="prose prose-sm dark:prose-invert max-w-none">
+                        <div className="prose prose-sm dark:prose-invert max-w-none max-h-48 overflow-y-auto break-words">
                           <ReactMarkdown>{card.back_content}</ReactMarkdown>
                         </div>
                         {/* Tag display (back) */}

@@ -169,8 +169,7 @@
     "switchToChinese": "切换到中文",
     "notFound": "卡组不存在",
     "filterByTagLabel": "按标签筛选",
-    "foundResults": "找到 {{count}} / 共 {{total}} 张卡片",
-    "noCards": "还没有卡片，添加第一张吧！"
+    "foundResults": "找到 {{count}} / 共 {{total}} 张卡片"
   },
   "study": {
     "title": "学习会话",
@@ -219,16 +218,28 @@
       "simple": "按顺序复习所有卡片"
     },
     "quality": {
-      "0": "完全忘记",
-      "1": "困难",
-      "2": "有印象",
-      "3": "勉强记得",
-      "4": "记得清楚",
+      "0": "忘记",
+      "1": "错误",
+      "2": "困难",
+      "3": "一般",
+      "4": "良好",
       "5": "完美"
     },
     "noDueCardsHint": "当前没有需要复习的卡片，请尝试\"简单复习\"模式浏览所有卡片",
     "noCardsInDeck": "该卡组还没有卡片，请先添加卡片",
-    "rateFailed": "评分失败"
+    "rateFailed": "评分失败",
+    "modeFsrsDesc": "下一代间隔重复算法，基于记忆模型优化复习调度",
+    "fsrs": {
+      "again": "重来",
+      "hard": "困难",
+      "good": "良好",
+      "easy": "容易"
+    },
+    "swipe": {
+      "know": "记得",
+      "forgot": "忘记"
+    },
+    "tapToFlip": "点击卡片翻转"
   },
   "stats": {
     "title": "学习统计",
@@ -271,7 +282,6 @@
     "allDecks": "所有卡组",
     "studied": "已学习",
     "completed": "{{percent}}% 完成",
-    "totalReviews": "总复习次数",
     "cumulativeReviews": "累计复习",
     "successRateCard": "成功率",
     "correctOutOfTotal": "{{correct}}/{{total}} 正确",
@@ -494,7 +504,7 @@
   "profile": {
     "title": "我的",
     "anonymous": "匿名用户",
-    "edit": "编辑",
+    "editAction": "编辑",
     "menu": {
       "personalProfile": "个人资料",
       "accountSettings": "账号设置",

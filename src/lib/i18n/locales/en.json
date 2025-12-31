@@ -169,8 +169,7 @@
     "switchToChinese": "Switch to Chinese",
     "notFound": "Deck does not exist",
     "filterByTagLabel": "Filter by Tag",
-    "foundResults": "Found {{count}} of {{total}} cards",
-    "noCards": "No cards yet, add your first one!"
+    "foundResults": "Found {{count}} of {{total}} cards"
   },
   "study": {
     "title": "Study Session",
@@ -219,16 +218,28 @@
       "simple": "Review all cards sequentially"
     },
     "quality": {
-      "0": "Complete Blackout",
-      "1": "Hard",
-      "2": "Familiar",
-      "3": "Barely Remembered",
-      "4": "Clearly Remembered",
+      "0": "Forgot",
+      "1": "Wrong",
+      "2": "Hard",
+      "3": "Ok",
+      "4": "Good",
       "5": "Perfect"
     },
     "noDueCardsHint": "No cards due for review. Try \"Simple Review\" mode to browse all cards.",
     "noCardsInDeck": "This deck has no cards yet. Please add some cards first.",
-    "rateFailed": "Failed to rate card"
+    "rateFailed": "Failed to rate card",
+    "modeFsrsDesc": "Next-generation spaced repetition with optimized memory retention",
+    "fsrs": {
+      "again": "Again",
+      "hard": "Hard",
+      "good": "Good",
+      "easy": "Easy"
+    },
+    "swipe": {
+      "know": "KNOW",
+      "forgot": "FORGOT"
+    },
+    "tapToFlip": "Tap card to flip"
   },
   "stats": {
     "title": "Learning Statistics",
@@ -271,7 +282,6 @@
     "allDecks": "All decks",
     "studied": "Studied",
     "completed": "{{percent}}% complete",
-    "totalReviews": "Total Reviews",
     "cumulativeReviews": "Cumulative reviews",
     "successRateCard": "Success Rate",
     "correctOutOfTotal": "{{correct}}/{{total}} correct",
@@ -492,7 +502,7 @@
   "profile": {
     "title": "Profile",
     "anonymous": "Anonymous",
-    "edit": "Edit",
+    "editAction": "Edit",
     "menu": {
       "personalProfile": "Personal Profile",
       "accountSettings": "Account Settings",

@@ -6,11 +6,10 @@ import { Loading } from '../components/common/Loading';
 import { toast } from '../hooks/useToast';
 import { useTranslation } from 'react-i18next';
 import type { StudyCard as StudyCardType } from '../features/study/utils/studyCards';
+import { PageTransition } from '../components/layout/PageTransition';
 
 // New Components
 import { StudyHeader } from '../features/study/components/StudyHeader';
-import { StudyControls } from '../features/study/components/StudyControls';
-import { StudyCard } from '../features/study/components/StudyCard';
 import { SwipeableStudyCard } from '../features/study/components/SwipeableStudyCard';
 
 export function StudyPage() {
@@ -42,25 +41,30 @@ export function StudyPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleStartSession = async () => {
+  const handleStartSession = async (overrideMode?: 'spaced-repetition' | 'simple-review' | 'fsrs') => {
     if (!deckId) return;
     setIsStarting(true);
     setShowNoDueCards(false);
+    
+    // Use override mode if provided, otherwise use selected mode
+    const modeToUse = overrideMode || selectedMode;
+    
     try {
-      await startSession(deckId, selectedMode);
+      await startSession(deckId, modeToUse);
       setShowModeSelection(false);
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Loading failed';
 
-      // If SM-2 mode has no due cards, show friendly hint inline
-      if ((message.includes('No cards due for review') || message.includes('No cards to review')) && selectedMode === 'spaced-repetition') {
+      // If SM-2 or FSRS mode has no due cards, show friendly hint inline
+      if ((message.includes('No cards due for review') || message.includes('No cards to review')) && (modeToUse === 'spaced-repetition' || modeToUse === 'fsrs')) {
         setShowNoDueCards(true);
         setShowModeSelection(false);
       } else if (message.includes('No cards found')) {
         toast.error(t('study.noCardsInDeck'));
         setTimeout(() => navigate(`/decks/${deckId}`), 2000);
       } else {
-        toast.error(message);
+        // Fallback translation for known errors or generic error
+        toast.error(t(`study.${message}`, message));
       }
     } finally {
       setIsStarting(false);
@@ -144,8 +148,14 @@ export function StudyPage() {
               </Link>
               <button
                 onClick={() => {
-                  reset();
-                  setShowModeSelection(true);
+                  // For simple review, restart immediately.
+                  // For others (scheduled), return to menu to avoid "No cards due" error or confusion.
+                  if (studyMode === 'simple-review') {
+                    handleStartSession('simple-review');
+                  } else {
+                    reset();
+                    setShowModeSelection(true);
+                  }
                 }}
                 className="px-6 py-3 font-medium text-white transition-colors bg-green-600 rounded-lg hover:bg-green-700"
               >
@@ -285,7 +295,7 @@ export function StudyPage() {
 
             <div className="mt-8">
               <button
-                onClick={handleStartSession}
+                onClick={() => handleStartSession()}
                 disabled={isStarting}
                 className="w-full px-6 py-4 text-lg font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
               >
@@ -300,42 +310,36 @@ export function StudyPage() {
 
   // Active Study Session
   return (
-    <AppLayout>
-      <div className="max-w-md mx-auto px-4 h-[calc(100vh-140px)] flex flex-col">
-        <StudyHeader
-          deckId={deckId || ''}
-          currentIndex={currentIndex}
-          totalCards={totalCards}
-          isFlipped={isFlipped}
-          isCloze={(currentCard as unknown as StudyCardType)?.type === 'cloze'}
-          clozeStep={
-            (currentCard as unknown as StudyCardType)?.clozeFieldIndex !== undefined
-              ? `${(currentCard as unknown as StudyCardType).clozeFieldIndex! + 1}/${(currentCard as unknown as StudyCardType).clozeTotalFields}`
-              : undefined
-          }
-        />
+    <PageTransition>
+      <AppLayout>
+        <div className="max-w-md mx-auto px-4 h-[calc(100vh-140px)] flex flex-col">
+          <StudyHeader
+            deckId={deckId || ''}
+            currentIndex={currentIndex}
+            totalCards={totalCards}
+            isFlipped={isFlipped}
+            isCloze={(currentCard as unknown as StudyCardType)?.type === 'cloze'}
+            clozeStep={
+              (currentCard as unknown as StudyCardType)?.clozeFieldIndex !== undefined
+                ? `${(currentCard as unknown as StudyCardType).clozeFieldIndex! + 1}/${(currentCard as unknown as StudyCardType).clozeTotalFields}`
+                : undefined
+            }
+          />
 
-        <div className="flex-1 flex flex-col justify-center">
-          <SwipeableStudyCard
-            onSwipeLeft={() => handleRate(0)} // Forgot / Again
-            onSwipeRight={() => handleRate(4)} // Good
-            onFlip={flipCard}
-          >
-            <StudyCard
+
+          <div className="flex-1 flex flex-col justify-center">
+            <SwipeableStudyCard
+              key={currentCard?.id || 'empty'}
               card={currentCard as unknown as StudyCardType}
-              isFlipped={isFlipped}
               onFlip={flipCard}
+              onRate={handleRate}
+              studyMode={studyMode}
+              onSwipeLeft={() => handleRate(0)}
+              onSwipeRight={() => handleRate(4)}
             />
-          </SwipeableStudyCard>
+          </div>
         </div>
-
-        <StudyControls
-          isFlipped={isFlipped}
-          studyMode={studyMode}
-          onFlip={flipCard}
-          onRate={handleRate}
-        />
-      </div>
-    </AppLayout>
+      </AppLayout>
+    </PageTransition>
   );
 }

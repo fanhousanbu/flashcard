@@ -8,9 +8,11 @@ interface ClozeCardProps {
   fieldId: string;
   isFlipped: boolean;
   onFlip: () => void;
+  frontBottomContent?: React.ReactNode;
+  backBottomContent?: React.ReactNode;
 }
 
-export function ClozeCard({ clozeData, fieldId, isFlipped, onFlip }: ClozeCardProps) {
+export function ClozeCard({ clozeData, fieldId, isFlipped, onFlip, frontBottomContent, backBottomContent }: ClozeCardProps) {
   const { t } = useTranslation();
 
   // Get the current field label
@@ -38,6 +40,11 @@ export function ClozeCard({ clozeData, fieldId, isFlipped, onFlip }: ClozeCardPr
               <div className="cloze-card-full-text">
                 <ReactMarkdown>{clozeData.original.replace(/\{\{c\d+::([^}\|]+?)(?:::(.+?))?\}\}/g, '[...]')}</ReactMarkdown>
               </div>
+              {frontBottomContent && (
+                <div className="mt-auto">
+                  {frontBottomContent}
+                </div>
+              )}
             </div>
           </div>
 
@@ -60,6 +67,11 @@ export function ClozeCard({ clozeData, fieldId, isFlipped, onFlip }: ClozeCardPr
                   {renderClozeContent(clozeData, fieldId, false)}
                 </ReactMarkdown>
               </div>
+              {backBottomContent && (
+                <div className="mt-auto">
+                  {backBottomContent}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -71,7 +83,7 @@ export function ClozeCard({ clozeData, fieldId, isFlipped, onFlip }: ClozeCardPr
 /**
  * Render cloze content with the specified field highlighted
  */
-function renderClozeContent(data: ClozeData, fieldId: string, isFront: boolean): string {
+function renderClozeContent(data: ClozeData, fieldId: string, _: boolean): string {
   const fieldIndex = data.fields.findIndex((f) => f.id === fieldId);
 
   if (fieldIndex === -1) {

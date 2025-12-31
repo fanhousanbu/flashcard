@@ -1,22 +1,31 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion, useMotionValue, useTransform, useAnimation, type PanInfo } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
+import { StudyCard } from './StudyCard';
+import type { StudyCard as StudyCardType } from '../utils/studyCards';
 
 interface SwipeableStudyCardProps {
-  children: React.ReactNode; // Content to render inside (likely FlipCard)
+  card: StudyCardType; 
   onSwipeLeft: () => void;
   onSwipeRight: () => void;
   onFlip: () => void;
+  onRate: (quality: number) => void;
+  studyMode: 'simple' | 'simple-review' | 'spaced-repetition' | 'fsrs';
 }
 
 export function SwipeableStudyCard({ 
-  children, 
+  card, 
   onSwipeLeft, 
   onSwipeRight, 
   onFlip,
+  onRate,
+  studyMode,
 }: SwipeableStudyCardProps) {
+  const { t } = useTranslation();
   const x = useMotionValue(0);
   const controls = useAnimation();
   const cardRef = useRef<HTMLDivElement>(null);
+  const [isFlipped, setIsFlipped] = useState(false);
   
   // Rotation based on x position
   const rotate = useTransform(x, [-200, 200], [-25, 25]);
@@ -62,40 +71,40 @@ export function SwipeableStudyCard({
     }
   };
 
-  // Detect simple tap vs drag
-  const handleTap = () => {
-    // If we are mostly centered, treat as tap
-    if (Math.abs(x.get()) < 5) {
-      onFlip();
-    }
-  };
-
   return (
-    <div className="relative w-full max-w-md mx-auto aspect-[3/4] sm:aspect-auto sm:h-[500px] perspective-1000">
+    <div className="relative w-full max-w-md mx-auto perspective-1000">
       <motion.div
         drag="x"
-        dragConstraints={{ left: 0, right: 0 }} // Free drag but snap back handled by controls
+        dragConstraints={{ left: 0, right: 0 }}
         dragElastic={0.7}
         onDragEnd={handleDragEnd}
-        onTap={handleTap}
         style={{ x, rotate }}
         animate={controls}
         initial={{ scale: 0.9, opacity: 0 }}
         whileInView={{ scale: 1, opacity: 1 }}
-        className="w-full h-full cursor-grab active:cursor-grabbing touch-none"
+        className="w-full max-h-[600px] cursor-grab active:cursor-grabbing touch-none"
         ref={cardRef}
       >
         {/* The Card Content */}
         <div className="relative w-full h-full">
-           {children}
+           <StudyCard
+            card={card}
+            isFlipped={isFlipped}
+            onFlip={() => {
+              setIsFlipped(prev => !prev);
+              onFlip();
+            }}
+            onRate={onRate}
+            studyMode={studyMode}
+          />
 
            {/* Overlay: Like (Green) */}
            <motion.div 
              style={{ opacity: likeOpacity }}
              className="absolute inset-0 z-20 flex items-center justify-center bg-green-100/30 dark:bg-green-900/30 pointer-events-none rounded-xl border-4 border-green-500"
            >
-             <div className="bg-green-500 text-white px-4 py-2 rounded-lg text-2xl font-bold transform -rotate-12 border-2 border-white shadow-lg">
-               KNOW
+             <div className="bg-green-500 text-white px-4 py-2 rounded-lg text-2xl font-bold transform -rotate-12 border-2 border-white shadow-lg uppercase">
+               {t('study.swipe.know')}
              </div>
            </motion.div>
 
@@ -104,8 +113,8 @@ export function SwipeableStudyCard({
              style={{ opacity: nopeOpacity }}
              className="absolute inset-0 z-20 flex items-center justify-center bg-red-100/30 dark:bg-red-900/30 pointer-events-none rounded-xl border-4 border-red-500"
            >
-             <div className="bg-red-500 text-white px-4 py-2 rounded-lg text-2xl font-bold transform rotate-12 border-2 border-white shadow-lg">
-               FORGOT
+             <div className="bg-red-500 text-white px-4 py-2 rounded-lg text-2xl font-bold transform rotate-12 border-2 border-white shadow-lg uppercase">
+               {t('study.swipe.forgot')}
              </div>
            </motion.div>
         </div>
