@@ -1,9 +1,9 @@
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../features/auth/store/authStore';
 import { AppLayout } from '../components/layout/AppLayout';
 import { Loading } from '../components/common/Loading';
-import { TagBadge } from '../components/common/TagBadge';
+
 import { toast } from '../hooks/useToast';
 import { useTranslation } from 'react-i18next';
 import * as db from '../lib/supabase/database';

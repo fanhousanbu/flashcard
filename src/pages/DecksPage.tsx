@@ -14,11 +14,10 @@ import { toast } from '../hooks/useToast';
 import ReactMarkdown from 'react-markdown';
 import * as db from '../lib/supabase/database';
 import type { Tag } from '../lib/types/tag';
-import type { CardType, ClozeData } from '../lib/types/deck';
+import type { CardType } from '../lib/types/deck';
 import {
   parseCloze,
   validateCloze,
-  getClozeFieldCount,
   renderClozeFront,
   renderClozeBack,
 } from '../features/cards/utils/clozeParser';

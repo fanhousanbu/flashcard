@@ -30,10 +30,10 @@ export function cardToStudyCards(card: Card): StudyCard[] {
       type: 'cloze' as const,
       front: '', // Will be rendered dynamically
       back: '', // Will be rendered dynamically
-      clozeData: card.cloze_data,
+      clozeData: card.cloze_data || undefined,
       clozeFieldId: field.id,
       clozeFieldIndex: index,
-      clozeTotalFields: card.cloze_data.fields.length,
+      clozeTotalFields: card.cloze_data?.fields.length || 0,
     }));
   }
 
