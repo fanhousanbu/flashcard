@@ -62,6 +62,26 @@ export function StudyPage() {
     try {
       await startSession(deckId, modeToUse);
       setShowModeSelection(false);
+      
+      // 保存学习历史：维护最近学习的5个卡组ID列表
+      const historyKey = 'recentStudyDecks';
+      const existingHistory = localStorage.getItem(historyKey);
+      let history: string[] = existingHistory ? JSON.parse(existingHistory) : [];
+      
+      // 移除当前卡组ID（如果存在）
+      history = history.filter(id => id !== deckId);
+      
+      // 将当前卡组ID添加到列表开头
+      history.unshift(deckId);
+      
+      // 只保留最近的5个
+      history = history.slice(0, 5);
+      
+      // 保存到localStorage
+      localStorage.setItem(historyKey, JSON.stringify(history));
+      
+      // 同时保持兼容性，保存最后学习的卡组ID
+      localStorage.setItem('lastStudiedDeckId', deckId);
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Loading failed';
 
