@@ -1,5 +1,5 @@
 -- ============================================
--- FlashCard - Clear Data for Specific User
+-- EverRecall - Clear Data for Specific User
 -- ============================================
 -- This script deletes all data for a specific user.
 -- Replace 'USER_EMAIL_OR_ID' with the actual email or user ID.
@@ -29,6 +29,7 @@ BEGIN
     WHERE deck_id IN (SELECT id FROM public.decks WHERE user_id = target_user_id)
   );
 
+  DELETE FROM public.marketplace_favorites WHERE user_id = target_user_id;
   DELETE FROM public.study_records WHERE user_id = target_user_id;
   DELETE FROM public.study_sessions WHERE user_id = target_user_id;
 
@@ -69,6 +70,7 @@ BEGIN
     WHERE deck_id IN (SELECT id FROM public.decks WHERE user_id = target_user_id)
   );
 
+  DELETE FROM public.marketplace_favorites WHERE user_id = target_user_id;
   DELETE FROM public.study_records WHERE user_id = target_user_id;
   DELETE FROM public.study_sessions WHERE user_id = target_user_id;
   DELETE FROM public.tags WHERE user_id = target_user_id;

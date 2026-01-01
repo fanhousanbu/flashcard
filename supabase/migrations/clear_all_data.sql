@@ -1,7 +1,7 @@
 -- ============================================
--- FlashCard Database Cleanup Script
+-- EverRecall Database Cleanup Script
 -- ============================================
--- This script deletes ALL data from the FlashCard database.
+-- This script deletes ALL data from the EverRecall database.
 -- Use this to reset the database for testing purposes.
 --
 -- WARNING: This will permanently delete all user data!
@@ -11,6 +11,7 @@
 
 -- Disable RLS temporarily to allow cleanup
 ALTER TABLE public.card_tags DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.marketplace_favorites DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.marketplace_ratings DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.purchases DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.marketplace_decks DISABLE ROW LEVEL SECURITY;
@@ -24,6 +25,7 @@ ALTER TABLE public.profiles DISABLE ROW LEVEL SECURITY;
 
 -- Delete all data (order matters due to foreign keys)
 DELETE FROM public.card_tags;
+DELETE FROM public.marketplace_favorites;
 DELETE FROM public.marketplace_ratings;
 DELETE FROM public.purchases;
 DELETE FROM public.marketplace_decks;
@@ -37,6 +39,7 @@ DELETE FROM public.profiles;
 
 -- Re-enable RLS
 ALTER TABLE public.card_tags ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.marketplace_favorites ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.marketplace_ratings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.purchases ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.marketplace_decks ENABLE ROW LEVEL SECURITY;
