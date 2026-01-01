@@ -1,6 +1,6 @@
 {
-  "name": "FlashCard - 智能学习卡片",
-  "short_name": "FlashCard",
+  "name": "久记闪卡 (EverRecall)",
+  "short_name": "EverRecall",
   "description": "基于间隔重复算法的智能学习卡片应用",
   "start_url": "/",
   "display": "standalone",

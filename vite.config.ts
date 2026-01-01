@@ -12,9 +12,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'icon.svg'],
       manifest: {
-        name: 'FlashCard - Smart Learning Cards',
-        short_name: 'FlashCard',
-        description: 'Smart flashcard app based on spaced repetition algorithm',
+        name: '久记闪卡 (EverRecall)',
+        short_name: 'EverRecall',
+        description: '基于间隔重复算法的智能学习卡片应用',
         theme_color: '#3B82F6',
         background_color: '#ffffff',
         display: 'standalone',

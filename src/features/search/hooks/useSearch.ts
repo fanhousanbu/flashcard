@@ -3,7 +3,7 @@ import { useAuthStore } from '../../auth/store/authStore';
 import * as db from '../../../lib/supabase/database';
 import type { SearchResults, DeckSearchResult, CardSearchResult } from '../../../lib/types/search';
 
-const SEARCH_HISTORY_KEY = 'flashcard_search_history';
+const SEARCH_HISTORY_KEY = 'everrecall_search_history';
 const MAX_HISTORY_ITEMS = 10;
 
 function getSearchHistory(): string[] {
