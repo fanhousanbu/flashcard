@@ -31,7 +31,11 @@
     "searchPlaceholder": "Search (Cmd+K)",
     "logout": "Logout",
     "login": "Login",
-    "signup": "Sign Up"
+    "signup": "Sign Up",
+    "startLearning": "Start Learning",
+    "recentDecks": "Recent Decks",
+    "noRecentDecks": "No recent study history",
+    "viewAllDecks": "View All Decks"
   },
   "home": {
     "title": "FlashCard",

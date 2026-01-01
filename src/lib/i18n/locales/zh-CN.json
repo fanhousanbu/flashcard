@@ -31,7 +31,11 @@
     "searchPlaceholder": "搜索 (⌘K)",
     "logout": "退出登录",
     "login": "登录",
-    "signup": "注册"
+    "signup": "注册",
+    "startLearning": "开始学习",
+    "recentDecks": "最近学习",
+    "noRecentDecks": "还没有学习记录",
+    "viewAllDecks": "查看所有卡组"
   },
   "home": {
     "title": "FlashCard",
