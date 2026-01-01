@@ -1,5 +1,6 @@
 {
   "common": {
+    "locale": "en",
     "loading": "Loading...",
     "save": "Save",
     "cancel": "Cancel",
@@ -16,7 +17,9 @@
     "import": "Import",
     "optional": "Optional",
     "language": "Language",
-    "theme": "Theme"
+    "theme": "Theme",
+    "close": "Close",
+    "processing": "Processing..."
   },
   "nav": {
     "myDecks": "My Decks",
@@ -24,6 +27,7 @@
     "tagManagement": "Tags",
     "marketplace": "Marketplace",
     "myProfile": "Profile",
+    "cardBrowser": "Browser",
     "searchPlaceholder": "Search (Cmd+K)",
     "logout": "Logout",
     "login": "Login",
@@ -168,7 +172,19 @@
     "notFound": "Deck does not exist",
     "filterByTagLabel": "Filter by Tag",
     "foundResults": "Found {{count}} of {{total}} cards",
-    "noCards": "No cards yet, add your first one!"
+    "cardType": "Card Type",
+    "basicCard": "Basic Card",
+    "clozeCard": "Cloze Card",
+    "clozeContent": "Cloze Content",
+    "clozeHint": "Use {{c1::answer}} format",
+    "clozeSyntaxHelp": "Cloze Syntax",
+    "clozeBasic": "Basic cloze",
+    "clozeWithHint": "Cloze with hint",
+    "clozeFieldCount": "This will create",
+    "card": "card",
+    "clozePreviewOf": "Preview of",
+    "clozeContentRequired": "Cloze content is required",
+    "contentRequired": "Front and back content are required"
   },
   "study": {
     "title": "Study Session",
@@ -217,16 +233,28 @@
       "simple": "Review all cards sequentially"
     },
     "quality": {
-      "0": "Complete Blackout",
-      "1": "Hard",
-      "2": "Familiar",
-      "3": "Barely Remembered",
-      "4": "Clearly Remembered",
+      "0": "Forgot",
+      "1": "Wrong",
+      "2": "Hard",
+      "3": "Ok",
+      "4": "Good",
       "5": "Perfect"
     },
     "noDueCardsHint": "No cards due for review. Try \"Simple Review\" mode to browse all cards.",
     "noCardsInDeck": "This deck has no cards yet. Please add some cards first.",
-    "rateFailed": "Failed to rate card"
+    "rateFailed": "Failed to rate card",
+    "modeFsrsDesc": "Next-generation spaced repetition with optimized memory retention",
+    "fsrs": {
+      "again": "Again",
+      "hard": "Hard",
+      "good": "Good",
+      "easy": "Easy"
+    },
+    "swipe": {
+      "know": "KNOW",
+      "forgot": "FORGOT"
+    },
+    "tapToFlip": "Tap card to flip"
   },
   "stats": {
     "title": "Learning Statistics",
@@ -269,7 +297,6 @@
     "allDecks": "All decks",
     "studied": "Studied",
     "completed": "{{percent}}% complete",
-    "totalReviews": "Total Reviews",
     "cumulativeReviews": "Cumulative reviews",
     "successRateCard": "Success Rate",
     "correctOutOfTotal": "{{correct}}/{{total}} correct",
@@ -314,7 +341,20 @@
       "2stars": "2+ Stars",
       "sortByCreated": "Newest First",
       "sortByRating": "Highest Rated",
-      "sortByDownloads": "Most Downloaded"
+      "sortByDownloads": "Most Downloaded",
+      "sortByUpdated": "Recently Updated",
+      "allPrices": "All Prices",
+      "freeOnly": "Free Only"
+    },
+    "categories": {
+      "all": "All",
+      "language": "Language",
+      "programming": "Programming",
+      "science": "Science",
+      "history": "History",
+      "math": "Math",
+      "exam": "Exam Prep",
+      "other": "Other"
     },
     "deck": {
       "author": "Author",
@@ -329,14 +369,38 @@
       "viewDetails": "View Details",
       "noDescription": "No description provided",
       "buyAndImport": "Buy",
+      "buy": "Buy",
       "unknownAuthor": "Unknown",
       "rateSuccess": "Rating submitted successfully!",
-      "rateFailed": "Failed to submit rating"
+      "rateFailed": "Failed to submit rating",
+      "purchased": "Purchased"
+    },
+    "detail": {
+      "author": "Author",
+      "downloads": "downloads",
+      "cards": "cards",
+      "description": "Description",
+      "previewCards": "Preview Cards",
+      "front": "Front",
+      "back": "Back",
+      "moreCards": "more cards",
+      "yourRating": "Your Rating",
+      "ratings": "ratings",
+      "buyFor": "Buy ¥{{price}}",
+      "importDeck": "Import Deck",
+      "purchaseRequired": "Please purchase this deck first",
+      "purchaseSuccess": "Purchase successful!",
+      "purchaseFailed": "Purchase failed",
+      "favoriteFailed": "Failed to update favorite",
+      "addToFavorites": "Add to favorites",
+      "removeFromFavorites": "Remove from favorites"
     },
     "publish": {
       "title": "Publish Deck",
       "deckTitle": "Deck Title",
       "description": "Description",
+      "category": "Category",
+      "noCategory": "No Category",
       "price": "Price (0 for free)",
       "priceInYuan": "Price (¥, 0 for free)",
       "publishButton": "Publish",
@@ -351,10 +415,30 @@
       "pleaseSelect": "Please select",
       "titlePlaceholder": "Give your deck an attractive title",
       "descriptionPlaceholder": "Describe the content and features of the deck"
+    },
+    "author": {
+      "title": "Author Dashboard",
+      "subtitle": "Manage your published marketplace decks",
+      "totalDecks": "Published Decks",
+      "totalDownloads": "Total Downloads",
+      "totalSales": "Total Sales",
+      "totalRevenue": "Total Revenue",
+      "myDecks": "My Published Decks",
+      "noDecks": "You haven't published any decks yet",
+      "publishFirst": "Go to marketplace to publish",
+      "editDeck": "Edit Deck",
+      "unpublish": "Unpublish",
+      "unpublishConfirm": "Are you sure you want to unpublish this deck?",
+      "unpublishSuccess": "Deck unpublished successfully",
+      "unpublishFailed": "Failed to unpublish deck",
+      "updateSuccess": "Deck updated successfully",
+      "updateFailed": "Failed to update deck",
+      "link": "Author Dashboard"
     }
   },
   "tags": {
     "title": "Tag Management",
+    "label": "Tags",
     "addTag": "Add Tag",
     "createNewTag": "Create New Tag",
     "create": "Create Tag",
@@ -403,7 +487,16 @@
     "signupFailed": "Failed to create account",
     "deleteFailed": "Failed to delete",
     "updateFailed": "Failed to update",
-    "loadFailed": "Failed to load data"
+    "loadFailed": "Failed to load data",
+    "validation": {
+      "cloze": {
+        "unbalancedBraces": "Unbalanced braces: make sure each {{ has a matching }}",
+        "invalidFormat": "Invalid cloze format: {{braces}} - use {{c1::answer}} format",
+        "emptyField": "Empty cloze fields found: {{fields}}",
+        "duplicateIds": "Duplicate cloze IDs detected - each cloze must have a unique ID",
+        "noFields": "No cloze fields found - use {{c1::answer}} format to create a cloze deletion"
+      }
+    }
   },
   "toasts": {
     "success": "Success!",
@@ -413,7 +506,9 @@
     "saved": "Saved successfully!",
     "deleted": "Deleted successfully!",
     "updated": "Updated successfully!",
-    "copied": "Copied to clipboard!"
+    "copied": "Copied to clipboard!",
+    "moved": "Cards moved successfully",
+    "tagAdded": "Tags added successfully"
   },
   "search": {
     "placeholder": "Search decks or cards...",
@@ -434,12 +529,13 @@
   "profile": {
     "title": "Profile",
     "anonymous": "Anonymous",
-    "edit": "Edit",
+    "editAction": "Edit",
     "menu": {
       "personalProfile": "Personal Profile",
       "accountSettings": "Account Settings",
       "studyPreferences": "Study Preferences",
       "appSettings": "App Settings",
+      "authorDashboard": "Author Dashboard",
       "logout": "Logout"
     },
     "stats": {
@@ -476,6 +572,8 @@
       "modeSpacedDesc": "Smart review based on memory curve",
       "modeSimple": "Simple Review",
       "modeSimpleDesc": "Browse all cards sequentially",
+      "modeFsrs": "FSRS Algorithm",
+      "modeFsrsDesc": "Next-generation spaced repetition with optimized memory retention",
       "dailyGoal": "Daily Study Goal",
       "dailyGoalDesc": "Set your target number of cards to study daily",
       "saved": "Preferences saved successfully",
@@ -489,5 +587,32 @@
       "themeAuto": "System",
       "language": "Language"
     }
+  },
+  "browser": {
+    "title": "Card Browser",
+    "totalCards": "{{count}} cards total",
+    "deck": "Deck",
+    "allDecks": "All Decks",
+    "allTags": "All Tags",
+    "cardType": "Card Type",
+    "allTypes": "All Types",
+    "search": "Search",
+    "searchPlaceholder": "Search cards...",
+    "selected": "selected",
+    "batchActions": "Batch Actions",
+    "delete": "Delete",
+    "moveToDeck": "Move to Deck",
+    "selectDeck": "Select a deck",
+    "selectAll": "Select All",
+    "noCards": "No cards found",
+    "reviews": "reviews",
+    "edit": "Edit",
+    "page": "Page",
+    "preview": "Preview",
+    "totalReviews": "total reviews",
+    "correct": "correct",
+    "lastReviewed": "Last reviewed",
+    "editCard": "Edit Card",
+    "selectPreview": "Select a card to preview"
   }
 }

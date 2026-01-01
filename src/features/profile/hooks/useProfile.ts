@@ -9,11 +9,13 @@ import type { StudyMode } from '../../../lib/types/study';
 const toAppStudyMode: Record<string, StudyMode> = {
   'spaced': 'spaced-repetition',
   'simple': 'simple-review',
+  'fsrs': 'fsrs',
 };
 
 const toDbStudyMode: Record<StudyMode, string> = {
   'spaced-repetition': 'spaced',
   'simple-review': 'simple',
+  'fsrs': 'fsrs',
 };
 
 export function useProfile() {

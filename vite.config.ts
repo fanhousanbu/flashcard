@@ -10,7 +10,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'vite.svg'],
+      includeAssets: ['favicon.ico', 'icon.svg'],
       manifest: {
         name: 'FlashCard - Smart Learning Cards',
         short_name: 'FlashCard',
@@ -20,7 +20,7 @@ export default defineConfig({
         display: 'standalone',
         icons: [
           {
-            src: 'vite.svg',
+            src: 'icon.svg',
             sizes: 'any',
             type: 'image/svg+xml',
           },

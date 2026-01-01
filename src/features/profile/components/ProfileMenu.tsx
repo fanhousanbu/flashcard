@@ -29,6 +29,11 @@ const menuItems: MenuItem[] = [
     icon: '⚙️',
     labelKey: 'profile.menu.appSettings',
   },
+  {
+    to: '/marketplace/author',
+    icon: '🛠️',
+    labelKey: 'profile.menu.authorDashboard',
+  },
 ];
 
 interface ProfileMenuProps {

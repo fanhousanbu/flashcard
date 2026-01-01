@@ -1,6 +1,14 @@
 import { useState, useCallback } from 'react';
-import type { Card } from '../../../lib/types/card';
+import type { Card, CardType, ClozeData } from '../../../lib/types/deck';
 import * as db from '../../../lib/supabase/database';
+
+interface CreateCardOptions {
+  front_content: string;
+  back_content: string;
+  position: number;
+  card_type?: CardType;
+  cloze_data?: ClozeData | null;
+}
 
 export function useCards(deckId?: string) {
   const [cards, setCards] = useState<Card[]>([]);
@@ -9,7 +17,7 @@ export function useCards(deckId?: string) {
   const loadCards = useCallback(async (id?: string) => {
     const targetId = id || deckId;
     if (!targetId) return;
-    
+
     setLoading(true);
     try {
       const data = await db.getCardsByDeckId(targetId);
@@ -23,7 +31,7 @@ export function useCards(deckId?: string) {
     }
   }, [deckId]);
 
-  const createCard = async (card: { front_content: string; back_content: string; position: number }, targetDeckId?: string) => {
+  const createCard = async (options: CreateCardOptions, targetDeckId?: string) => {
     const id = targetDeckId || deckId;
     if (!id) throw new Error('Deck ID is required');
 
@@ -31,7 +39,11 @@ export function useCards(deckId?: string) {
     try {
       const newCard = await db.createCard({
         deck_id: id,
-        ...card,
+        front_content: options.front_content,
+        back_content: options.back_content,
+        position: options.position,
+        card_type: options.card_type || 'basic',
+        cloze_data: options.cloze_data,
       });
       setCards((prev) => [...prev, newCard]);
       return newCard;

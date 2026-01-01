@@ -4,7 +4,9 @@ import { useStudyStore } from '../store/studyStore';
 import { useAuthStore } from '../../auth/store/authStore';
 import * as db from '../../../lib/supabase/database';
 import { calculateSM2 } from '../algorithms/sm2';
+import { calculateFSRS, sm2QualityToFSRSRating } from '../algorithms/fsrs';
 import type { StudyMode } from '../../../lib/types/study';
+import { cardsToStudyCards, type StudyCard } from '../utils/studyCards';
 
 export function useStudySession() {
   const {
@@ -33,7 +35,7 @@ export function useStudySession() {
       setStudyMode(mode);
 
       let cards;
-      if (mode === 'spaced-repetition') {
+      if (mode === 'spaced-repetition' || mode === 'fsrs') {
         // Load due cards
         const dueRecords = await db.getDueCards(user.id, deckId);
         cards = dueRecords.map((record: any) => record.cards).filter(Boolean);
@@ -46,8 +48,11 @@ export function useStudySession() {
         throw new Error('No cards to review');
       }
 
-      setSessionCards(cards);
-      setCurrentCard(cards[0]);
+      // Convert cards to study cards (expands cloze cards)
+      const studyCards = cardsToStudyCards(cards);
+
+      setSessionCards(studyCards);
+      setCurrentCard(studyCards[0]);
     },
     [user, reset, setStudyMode, setSessionCards, setCurrentCard]
   );
@@ -63,10 +68,41 @@ export function useStudySession() {
 
       try {
         const isCorrect = quality >= 3; // A rating >= 3 is considered correct
-        
-        if (studyMode === 'spaced-repetition') {
+
+        // For cloze cards, use the original card ID for study records
+        const cardId = (currentCard as StudyCard).originalCardId || currentCard.id;
+
+        if (studyMode === 'fsrs') {
+          // FSRS mode: use FSRS algorithm
+          const existingRecord = await db.getStudyRecord(user.id, cardId);
+
+          const fsrsRating = sm2QualityToFSRSRating(quality);
+          const fsrsResult = calculateFSRS(
+            {
+              stability: existingRecord?.stability || 0,
+              difficulty: existingRecord?.difficulty || 5,
+            },
+            {
+              rating: fsrsRating,
+              answer_time_ms: 0, // TODO: track actual answer time
+            }
+          );
+
+          // Update study record with FSRS results
+          await db.upsertStudyRecord({
+            user_id: user.id,
+            card_id: cardId,
+            stability: fsrsResult.card.stability,
+            difficulty: fsrsResult.card.difficulty,
+            next_review_date: fsrsResult.card.due.toISOString(),
+            last_reviewed_at: new Date().toISOString(),
+            last_quality: quality,
+            increment_total: true,
+            increment_correct: isCorrect,
+          });
+        } else if (studyMode === 'spaced-repetition') {
           // Spaced repetition mode: use SM-2 algorithm
-          const existingRecord = await db.getStudyRecord(user.id, currentCard.id);
+          const existingRecord = await db.getStudyRecord(user.id, cardId);
 
           const result = calculateSM2(
             quality,
@@ -78,7 +114,7 @@ export function useStudySession() {
           // Update study record (including SM-2 algorithm results and statistics)
           await db.upsertStudyRecord({
             user_id: user.id,
-            card_id: currentCard.id,
+            card_id: cardId,
             easiness_factor: result.easeFactor,
             interval: result.interval,
             repetitions: result.repetitions,
@@ -92,7 +128,7 @@ export function useStudySession() {
           // Simple review mode: only update statistics and last reviewed time
           await db.upsertStudyRecord({
             user_id: user.id,
-            card_id: currentCard.id,
+            card_id: cardId,
             last_reviewed_at: new Date().toISOString(),
             last_quality: quality,
             increment_total: true,

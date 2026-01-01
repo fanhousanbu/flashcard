@@ -1,6 +1,7 @@
 /* Flip card container */
 .flip-card-container {
   width: 100%;
+  height: 100%;
   perspective: 1000px;
   margin-bottom: 0;
 }
@@ -8,7 +9,7 @@
 /* Flip card */
 .flip-card {
   width: 100%;
-  min-height: 280px;
+  height: 100%;
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
@@ -18,30 +19,43 @@
   transform: rotateY(180deg);
 }
 
-/* Card inner container */
+/* Card inner container - CSS Grid for height stability */
 .flip-card-inner {
   width: 100%;
   height: 100%;
-  position: relative;
+  display: grid;
+  grid-template-areas: "card";
   transform-style: preserve-3d;
 }
 
 /* Card faces (front and back) */
 .flip-card-face {
+  grid-area: card;
   width: 100%;
-  height: 280px;
-  position: absolute;
+  min-height: 400px;
+  max-height: 600px;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   border-radius: 16px;
-  background: white;
   border: 2px solid #e5e7eb;
-  padding: 2rem;
+  padding-top: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 1.5rem;
+  /* Reduced from 3rem to balance between deck view and study view */
   display: flex;
   flex-direction: column;
-  justify-content: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   transition: background-color 0.3s ease, border-color 0.3s ease;
+  background: white;
+}
+
+/* Compact variant overrides */
+.flip-card-container.compact .flip-card-face {
+  min-height: 200px !important;
+  /* Override default 400px */
+  padding: 1rem !important;
+  /* Reduced padding */
 }
 
 /* Dark mode - using higher specificity selectors */
@@ -66,8 +80,10 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; REMOVED */
 }
+
+
 
 .flip-card-label {
   font-size: 0.875rem;
@@ -88,6 +104,11 @@
   color: #111827;
   text-align: center;
   transition: color 0.3s ease;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  /* Crucial for scrolling inside flex items */
 }
 
 :global(html.dark) .flip-card-text {
@@ -303,6 +324,7 @@
     transform: translateX(-30%);
     opacity: 0.6;
   }
+
   to {
     transform: translateX(0);
     opacity: 1;
@@ -407,4 +429,3 @@
     right: 0.5rem;
   }
 }
-

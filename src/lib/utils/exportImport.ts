@@ -18,6 +18,8 @@ export function exportDeck(deck: Deck, cards: Card[]): string {
       front_content: card.front_content,
       back_content: card.back_content,
       position: card.position,
+      card_type: card.card_type,
+      cloze_data: card.cloze_data,
     })),
   };
 
@@ -144,6 +146,8 @@ export function parseCSVData(csv: string, deckName?: string): ExportData {
       front_content: values[frontIndex] || '',
       back_content: values[backIndex] || '',
       position: positionIndex >= 0 ? parseInt(values[positionIndex] || String(index), 10) : index,
+      card_type: 'basic' as const,
+      cloze_data: null,
     };
   });
   
