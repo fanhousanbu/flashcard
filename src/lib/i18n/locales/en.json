@@ -109,6 +109,7 @@
     "createDeck": "Create Deck",
     "noDecks": "No decks yet, create your first one!",
     "noDescription": "No description",
+    "noResults": "No matching decks found",
     "view": "View",
     "study": "Study",
     "delete": "Delete",
@@ -117,6 +118,22 @@
     "createFailed": "Failed to create",
     "deleteSuccess": "Deck deleted",
     "deleteFailed": "Failed to delete",
+    "greeting": {
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening"
+    },
+    "dailyGoal": "Daily Goal",
+    "decksTotal": "decks",
+    "keepLearning": "Keep up the great work!",
+    "searchPlaceholder": "Search your knowledge base...",
+    "filter": {
+      "all": "All",
+      "due": "Due",
+      "favorite": "Favorites"
+    },
+    "myDecks": "My Decks",
+    "decks": "decks",
     "modal": {
       "title": "Create Deck",
       "name": "Deck Name",

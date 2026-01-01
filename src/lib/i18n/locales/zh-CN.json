@@ -109,6 +109,7 @@
     "createDeck": "创建卡组",
     "noDecks": "还没有卡组，创建第一个吧！",
     "noDescription": "暂无描述",
+    "noResults": "没有找到匹配的卡组",
     "view": "查看",
     "study": "学习",
     "delete": "删除",
@@ -117,6 +118,22 @@
     "createFailed": "创建失败",
     "deleteSuccess": "卡组已删除",
     "deleteFailed": "删除失败",
+    "greeting": {
+      "morning": "早上好",
+      "afternoon": "下午好",
+      "evening": "晚上好"
+    },
+    "dailyGoal": "今日目标",
+    "decksTotal": "个卡组",
+    "keepLearning": "继续保持学习！",
+    "searchPlaceholder": "搜索你的知识库...",
+    "filter": {
+      "all": "全部",
+      "due": "待复习",
+      "favorite": "收藏"
+    },
+    "myDecks": "正在学习",
+    "decks": "个卡组",
     "modal": {
       "title": "创建卡组",
       "name": "卡组名称",
