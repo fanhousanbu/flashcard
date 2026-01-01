@@ -76,8 +76,8 @@ export function renderClozeFront(data: ClozeData, fieldId: string): string {
     'g'
   );
 
-  // Replace only the specified field with blank
-  result = result.replace(fieldRegex, '[...]');
+  // Replace only the specified field with blank or hint
+  result = result.replace(fieldRegex, field.hint ? `[${field.hint}]` : '[...]');
 
   // Replace all other cloze fields with their answers
   result = result.replace(CLOZE_REGEX, (_, _id, answer) => answer);
@@ -132,11 +132,10 @@ export function getClozeFieldCount(text: string): number {
   return matches ? matches.length : 0;
 }
 
-/**
- * Validate cloze syntax
- * @param text - The text to validate
- * @returns Validation result with errors if any
- */
+import i18n from '@/lib/i18n/config';
+
+// ... (existing imports and code)
+
 export function validateCloze(text: string): {
   valid: boolean;
   errors: string[];
@@ -147,21 +146,21 @@ export function validateCloze(text: string): {
   const openBraces = (text.match(/\{\{/g) || []).length;
   const closeBraces = (text.match(/\}\}/g) || []).length;
   if (openBraces !== closeBraces) {
-    errors.push('Unbalanced braces: make sure each {{ has a matching }}');
+    errors.push(i18n.t('errors.validation.cloze.unbalancedBraces'));
   }
 
   // Check for invalid cloze format
   const invalidCloze = text.match(/\{\{c[^0-9]/g);
   if (invalidCloze) {
     errors.push(
-      `Invalid cloze format: ${invalidCloze.join(', ')} - use {{c1::answer}} format`
+      i18n.t('errors.validation.cloze.invalidFormat', { braces: invalidCloze.join(', ') })
     );
   }
 
   // Check for missing answers
   const emptyCloze = text.match(/\{\{c\d+::\}\}/g);
   if (emptyCloze) {
-    errors.push(`Empty cloze fields found: ${emptyCloze.join(', ')}`);
+    errors.push(i18n.t('errors.validation.cloze.emptyField', { fields: emptyCloze.join(', ') }));
   }
 
   // Check for duplicate cloze IDs
@@ -170,8 +169,11 @@ export function validateCloze(text: string): {
     const ids = clozeIds.map((id) => parseInt(id.replace(/\{\{c/, '').replace('::', '')));
     const uniqueIds = new Set(ids);
     if (ids.length !== uniqueIds.size) {
-      errors.push('Duplicate cloze IDs detected - each cloze must have a unique ID');
+      errors.push(i18n.t('errors.validation.cloze.duplicateIds'));
     }
+  } else {
+    // Check if there are no cloze fields at all
+    errors.push(i18n.t('errors.validation.cloze.noFields'));
   }
 
   return {

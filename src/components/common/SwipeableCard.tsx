@@ -7,9 +7,10 @@ interface SwipeableCardProps {
   frontContent: ReactNode;
   backContent: ReactNode;
   onDelete: () => void;
+  variant?: 'default' | 'compact';
 }
 
-export function SwipeableCard({ frontContent, backContent, onDelete }: SwipeableCardProps) {
+export function SwipeableCard({ frontContent, backContent, onDelete, variant = 'default' }: SwipeableCardProps) {
   const { t } = useTranslation();
   const [translateX, setTranslateX] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -160,6 +161,7 @@ export function SwipeableCard({ frontContent, backContent, onDelete }: Swipeable
             backContent={backContent}
             isFlipped={isFlipped}
             onFlip={() => setIsFlipped(!isFlipped)}
+            variant={variant}
           />
         </div>
       </div>

@@ -50,6 +50,14 @@
   background: white;
 }
 
+/* Compact variant overrides */
+.flip-card-container.compact .flip-card-face {
+  min-height: 200px !important;
+  /* Override default 400px */
+  padding: 1rem !important;
+  /* Reduced padding */
+}
+
 /* Dark mode - using higher specificity selectors */
 :global(html.dark) .flip-card-face {
   background: #1f2937 !important;

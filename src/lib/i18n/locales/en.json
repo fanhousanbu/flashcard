@@ -1,5 +1,6 @@
 {
   "common": {
+    "locale": "en",
     "loading": "Loading...",
     "save": "Save",
     "cancel": "Cancel",
@@ -26,6 +27,7 @@
     "tagManagement": "Tags",
     "marketplace": "Marketplace",
     "myProfile": "Profile",
+    "cardBrowser": "Browser",
     "searchPlaceholder": "Search (Cmd+K)",
     "logout": "Logout",
     "login": "Login",
@@ -485,7 +487,16 @@
     "signupFailed": "Failed to create account",
     "deleteFailed": "Failed to delete",
     "updateFailed": "Failed to update",
-    "loadFailed": "Failed to load data"
+    "loadFailed": "Failed to load data",
+    "validation": {
+      "cloze": {
+        "unbalancedBraces": "Unbalanced braces: make sure each {{ has a matching }}",
+        "invalidFormat": "Invalid cloze format: {{braces}} - use {{c1::answer}} format",
+        "emptyField": "Empty cloze fields found: {{fields}}",
+        "duplicateIds": "Duplicate cloze IDs detected - each cloze must have a unique ID",
+        "noFields": "No cloze fields found - use {{c1::answer}} format to create a cloze deletion"
+      }
+    }
   },
   "toasts": {
     "success": "Success!",
@@ -495,7 +506,9 @@
     "saved": "Saved successfully!",
     "deleted": "Deleted successfully!",
     "updated": "Updated successfully!",
-    "copied": "Copied to clipboard!"
+    "copied": "Copied to clipboard!",
+    "moved": "Cards moved successfully",
+    "tagAdded": "Tags added successfully"
   },
   "search": {
     "placeholder": "Search decks or cards...",
@@ -559,6 +572,8 @@
       "modeSpacedDesc": "Smart review based on memory curve",
       "modeSimple": "Simple Review",
       "modeSimpleDesc": "Browse all cards sequentially",
+      "modeFsrs": "FSRS Algorithm",
+      "modeFsrsDesc": "Next-generation spaced repetition with optimized memory retention",
       "dailyGoal": "Daily Study Goal",
       "dailyGoalDesc": "Set your target number of cards to study daily",
       "saved": "Preferences saved successfully",
@@ -572,5 +587,32 @@
       "themeAuto": "System",
       "language": "Language"
     }
+  },
+  "browser": {
+    "title": "Card Browser",
+    "totalCards": "{{count}} cards total",
+    "deck": "Deck",
+    "allDecks": "All Decks",
+    "allTags": "All Tags",
+    "cardType": "Card Type",
+    "allTypes": "All Types",
+    "search": "Search",
+    "searchPlaceholder": "Search cards...",
+    "selected": "selected",
+    "batchActions": "Batch Actions",
+    "delete": "Delete",
+    "moveToDeck": "Move to Deck",
+    "selectDeck": "Select a deck",
+    "selectAll": "Select All",
+    "noCards": "No cards found",
+    "reviews": "reviews",
+    "edit": "Edit",
+    "page": "Page",
+    "preview": "Preview",
+    "totalReviews": "total reviews",
+    "correct": "correct",
+    "lastReviewed": "Last reviewed",
+    "editCard": "Edit Card",
+    "selectPreview": "Select a card to preview"
   }
 }

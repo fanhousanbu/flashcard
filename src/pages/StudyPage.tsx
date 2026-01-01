@@ -12,10 +12,13 @@ import { PageTransition } from '../components/layout/PageTransition';
 import { StudyHeader } from '../features/study/components/StudyHeader';
 import { SwipeableStudyCard } from '../features/study/components/SwipeableStudyCard';
 
+import { useProfile } from '../features/profile/hooks/useProfile';
+
 export function StudyPage() {
   const { deckId } = useParams<{ deckId: string }>();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { preferences } = useProfile();
   const {
     currentCard,
     currentIndex,
@@ -31,6 +34,13 @@ export function StudyPage() {
 
   // State for mode selection before starting session
   const [selectedMode, setSelectedMode] = useState<'spaced-repetition' | 'simple-review' | 'fsrs'>('fsrs');
+
+  // Sync selected mode with user preferences
+  useEffect(() => {
+    if (preferences?.defaultStudyMode) {
+      setSelectedMode(preferences.defaultStudyMode);
+    }
+  }, [preferences?.defaultStudyMode]);
   const [showModeSelection, setShowModeSelection] = useState(true);
   const [isStarting, setIsStarting] = useState(false);
   const [showNoDueCards, setShowNoDueCards] = useState(false);

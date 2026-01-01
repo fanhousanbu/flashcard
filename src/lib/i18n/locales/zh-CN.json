@@ -1,5 +1,6 @@
 {
   "common": {
+    "locale": "zh",
     "loading": "加载中...",
     "save": "保存",
     "cancel": "取消",
@@ -26,6 +27,7 @@
     "tagManagement": "标签管理",
     "marketplace": "卡组市场",
     "myProfile": "我的",
+    "cardBrowser": "卡片浏览",
     "searchPlaceholder": "搜索 (⌘K)",
     "logout": "退出登录",
     "login": "登录",
@@ -487,7 +489,16 @@
     "signupFailed": "创建账号失败",
     "deleteFailed": "删除失败",
     "updateFailed": "更新失败",
-    "loadFailed": "加载数据失败"
+    "loadFailed": "加载数据失败",
+    "validation": {
+      "cloze": {
+        "unbalancedBraces": "花括号不匹配：请确保每个 {{ 都有对应的 }}",
+        "invalidFormat": "无效的填空格式：{{braces}} - 请使用 {{c1::答案}} 格式",
+        "emptyField": "存在空的填空字段：{{fields}}",
+        "duplicateIds": "检测到重复的填空 ID - 每个填空必须有唯一的 ID",
+        "noFields": "未找到填空字段 - 请使用 {{c1::答案}} 格式创建填空"
+      }
+    }
   },
   "toasts": {
     "success": "成功！",
@@ -497,7 +508,9 @@
     "saved": "保存成功！",
     "deleted": "删除成功！",
     "updated": "更新成功！",
-    "copied": "已复制到剪贴板！"
+    "copied": "已复制到剪贴板！",
+    "moved": "卡片移动成功",
+    "tagAdded": "标签添加成功"
   },
   "search": {
     "placeholder": "搜索卡组或卡片...",
@@ -561,6 +574,8 @@
       "modeSpacedDesc": "根据记忆曲线智能安排复习",
       "modeSimple": "简单复习",
       "modeSimpleDesc": "顺序浏览所有卡片",
+      "modeFsrs": "FSRS 算法",
+      "modeFsrsDesc": "下一代间隔重复算法，基于记忆模型优化复习调度",
       "dailyGoal": "每日学习目标",
       "dailyGoalDesc": "设置每天想要学习的卡片数量",
       "saved": "偏好设置已保存",
@@ -574,5 +589,32 @@
       "themeAuto": "跟随系统",
       "language": "语言"
     }
+  },
+  "browser": {
+    "title": "卡片浏览器",
+    "totalCards": "共 {{count}} 张卡片",
+    "deck": "卡组",
+    "allDecks": "全部卡组",
+    "allTags": "全部标签",
+    "cardType": "卡片类型",
+    "allTypes": "全部类型",
+    "search": "搜索",
+    "searchPlaceholder": "搜索卡片...",
+    "selected": "已选择",
+    "batchActions": "批量操作",
+    "delete": "删除",
+    "moveToDeck": "移动到卡组",
+    "selectDeck": "选择卡组",
+    "selectAll": "全选",
+    "noCards": "未找到卡片",
+    "reviews": "次复习",
+    "edit": "编辑",
+    "page": "页",
+    "preview": "预览",
+    "totalReviews": "总复习次数",
+    "correct": "正确",
+    "lastReviewed": "上次复习",
+    "editCard": "编辑卡片",
+    "selectPreview": "选择一张卡片进行预览"
   }
 }

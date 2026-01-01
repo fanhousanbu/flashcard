@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 import type { ClozeData } from '@/lib/types/deck';
+import { renderClozeFront, renderClozeBack } from '@/features/cards/utils/clozeParser';
 import './ClozeCard.css';
 
 interface ClozeCardProps {
@@ -34,11 +35,9 @@ export function ClozeCard({ clozeData, fieldId, isFlipped, onFlip, frontBottomCo
                 </span>
                 <span className="cloze-field-indicator">Cloze {fieldLabel}</span>
               </div>
-              <div className="cloze-card-text text-gray-900 dark:!text-gray-100">
-                <ReactMarkdown>{`[...]`}</ReactMarkdown>
-              </div>
+              
               <div className="cloze-card-full-text">
-                <ReactMarkdown>{clozeData.original.replace(/\{\{c\d+::([^}\|]+?)(?:::(.+?))?\}\}/g, '[...]')}</ReactMarkdown>
+                <ReactMarkdown>{renderClozeFront(clozeData, fieldId)}</ReactMarkdown>
               </div>
               {frontBottomContent && (
                 <div className="mt-auto">
@@ -57,14 +56,10 @@ export function ClozeCard({ clozeData, fieldId, isFlipped, onFlip, frontBottomCo
                 </span>
                 <span className="cloze-field-indicator">Cloze {fieldLabel}</span>
               </div>
-              <div className="cloze-card-text text-gray-900 dark:!text-gray-100">
-                <ReactMarkdown>
-                  {`**${clozeData.fields[fieldIndex]?.answer || ''}**`}
-                </ReactMarkdown>
-              </div>
+              
               <div className="cloze-card-full-text">
                 <ReactMarkdown>
-                  {renderClozeContent(clozeData, fieldId, false)}
+                  {renderClozeBack(clozeData, fieldId)}
                 </ReactMarkdown>
               </div>
               {backBottomContent && (
@@ -78,95 +73,4 @@ export function ClozeCard({ clozeData, fieldId, isFlipped, onFlip, frontBottomCo
       </div>
     </div>
   );
-}
-
-/**
- * Render cloze content with the specified field highlighted
- */
-function renderClozeContent(data: ClozeData, fieldId: string, _: boolean): string {
-  const fieldIndex = data.fields.findIndex((f) => f.id === fieldId);
-
-  if (fieldIndex === -1) {
-    return data.original;
-  }
-
-  let result = data.original;
-
-  // Replace all cloze patterns
-  data.fields.forEach((field, index) => {
-    const regex = new RegExp(
-      `\\{\\{${field.id}::([^}\|]+?)(?:::(.+?))?\\}\\}`,
-      'g'
-    );
-
-    if (index === fieldIndex) {
-      // This is the current field - highlight it
-      result = result.replace(regex, `**${field.answer}**`);
-    } else {
-      // Other fields - show answer normally
-      result = result.replace(regex, field.answer);
-    }
-  });
-
-  return result;
-}
-
-/**
- * Render cloze content for the front (with blank)
- */
-export function renderClozeFront(data: ClozeData, fieldId: string): string {
-  const fieldIndex = data.fields.findIndex((f) => f.id === fieldId);
-
-  if (fieldIndex === -1) {
-    return data.original.replace(/\{\{c\d+::([^}\|]+?)(?:::(.+?))?\}\}/g, '[...]');
-  }
-
-  let result = data.original;
-
-  data.fields.forEach((field, index) => {
-    const regex = new RegExp(
-      `\\{\\{${field.id}::([^}\|]+?)(?:::(.+?))?\\}\\}`,
-      'g'
-    );
-
-    if (index === fieldIndex) {
-      // This is the current field - show blank
-      result = result.replace(regex, '[...]');
-    } else {
-      // Other fields - show answer
-      result = result.replace(regex, field.answer);
-    }
-  });
-
-  return result;
-}
-
-/**
- * Render cloze content for the back (with answer)
- */
-export function renderClozeBack(data: ClozeData, fieldId: string): string {
-  const fieldIndex = data.fields.findIndex((f) => f.id === fieldId);
-
-  if (fieldIndex === -1) {
-    return data.original.replace(/\{\{c\d+::([^}\|]+?)(?:::(.+?))?\}\}/g, '$1');
-  }
-
-  let result = data.original;
-
-  data.fields.forEach((field, index) => {
-    const regex = new RegExp(
-      `\\{\\{${field.id}::([^}\|]+?)(?:::(.+?))?\\}\\}`,
-      'g'
-    );
-
-    if (index === fieldIndex) {
-      // This is the current field - highlight it
-      result = result.replace(regex, `**${field.answer}**`);
-    } else {
-      // Other fields - show answer
-      result = result.replace(regex, field.answer);
-    }
-  });
-
-  return result;
 }

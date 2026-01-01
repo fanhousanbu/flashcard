@@ -22,7 +22,7 @@ export interface StudyCard {
  * Cloze cards become multiple study cards (one per field)
  */
 export function cardToStudyCards(card: Card): StudyCard[] {
-  if (card.card_type === 'cloze' && card.cloze_data) {
+  if (card.card_type === 'cloze' && card.cloze_data && card.cloze_data.fields.length > 0) {
     // Expand cloze card into multiple study cards
     return card.cloze_data.fields.map((field, index) => ({
       id: `${card.id}-${field.id}`,
