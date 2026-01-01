@@ -1,4 +1,4 @@
-# FlashCard
+# 久记闪卡 (EverRecall)
 
 A smart flashcard learning application built with React + TypeScript + Supabase, featuring spaced repetition algorithms and a card marketplace.
 

@@ -39,7 +39,7 @@ export function Header() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <Link to="/" className="text-xl font-bold text-blue-600 dark:text-blue-400">
-              FlashCard
+              久记闪卡
             </Link>
             {user && (
               <nav className="hidden md:flex ml-10 space-x-8">
